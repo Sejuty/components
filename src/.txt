@@ -1,0 +1,351 @@
+ const [dragging, setDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const gridRef = useRef(null);
+
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    setDragging(true);
+    setStartX(event.pageX - gridRef.current.offsetLeft);
+    setScrollLeft(gridRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (event) => {
+    event.preventDefault();
+    if (dragging) {
+      const x = event.pageX - gridRef.current.offsetLeft;
+      const walk = (x - startX) * 3;
+      gridRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+
+
+
+ <div className="bg-white rounded w-[72px] h-[72px] mr-[16px] mt-[16px] mb-[16px]">
+      <div className="flex justify-between items-center">
+        <h2 className="text-sm font-medium">Card Title</h2>
+        <div className="relative inline-block text-left">
+          <button
+            onClick={handleDropdownToggle}
+            className="focus:outline-none hover:bg-gray-100 rounded p-2 transition-colors duration-150 ease-in-out"
+          >
+            <HiDotsVertical
+              className="h-3 w-3 text-gray-400"
+              aria-hidden="true"
+            />
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute z-10 right-0 mt-2 w-30 rounded shadow-lg bg-white divide-y divide-gray-100">
+              <div className="py-1">
+                <button className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left text-sm">
+                  Make Default
+                </button>
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  Update
+                </button>
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+      // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // const handleDropdownToggle = () => {
+  //   setIsDropdownOpen(!isDropdownOpen);
+  // };
+
+    const handleDeleteGrid = (index) => {
+    const newGrid = [...grid];
+    newGrid.splice(index, 1);
+    setGrid(newGrid);
+  };
+
+
+
+   <div className=" bg-purple-500 min-w-[104px] max-w-[368px] h-[104px] m-6 rounded hello">
+      <div className="relative bg-purple-500 rounded">
+        <div
+          // onMouseDown={handleMouseDown}
+          // onMouseMove={handleMouseMove}
+          // onMouseLeave={handleMouseUp}
+          // onMouseUp={handleMouseUp}
+          ref={gridRef}
+          className="cursor cursor-pointer flex flex-row overflow-x-scroll min-w-[102px] max-w-[280px] pl-[8px]"
+        >
+          <Grid
+            grid={grid}
+            handleDeleteGrid={handleDeleteGrid}
+            handleDropdownToggle={handleDropdownToggle}
+            isDropdownOpen={isDropdownOpen}
+            dropdown={dropdown}
+          />
+        </div>
+        <div
+          onClick={handleAddGrid}
+          className="cursor-pointer p-[10px] text-4xl cursor-ponter bg-white rounded w-[72px] h-[72px] "
+        >
+          +
+        </div>
+      </div>
+    </div>
+
+     <button
+            onClick={(e) => handleDropdownToggle(index)}
+            className="focus:outline-none hover:bg-gray-100 rounded p-2 transition-colors duration-150 ease-in-out"
+          >
+            <HiDotsVertical
+              className="h-3 w-3 text-gray-400"
+              aria-hidden="true"
+            />
+          </button>
+          {isDropdownOpen[index] && (
+            <div className="absolute z-10 right-0 mt-2 w-30 rounded shadow-lg bg-white divide-y divide-gray-100">
+              <div className="py-1">
+                <button className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left text-sm">
+                  Make Default
+                </button>
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  Update
+                </button>
+                <button
+                  onClick={() => handleDeleteGrid(index)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+
+
+
+
+
+
+
+
+
+
+
+
+          <Grid
+            grid={grid}
+            handleDeleteGrid={handleDeleteGrid}
+            handleDropdownToggle={handleDropdownToggle}
+            isDropdownOpen={isDropdownOpen}
+            dropdown={dropdown}
+          />
+
+            <div className="bg-purple-500 w-fit max-w-[368px] rounded m-4">
+      <div className="flex relative bg-purple-500 rounded">
+        <div
+          // onMouseDown={handleMouseDown}
+          // onMouseMove={handleMouseMove}
+          // onMouseLeave={handleMouseUp}
+          // onMouseUp={handleMouseUp}
+          ref={gridRef}
+          className="cursor cursor-pointer flex flex-row overflow-x-scroll w-fit max-w-[280px] space-x-4"
+        >
+          
+        </div>
+        <div
+          onClick={handleAddGrid}
+          className="cursor-pointer text-4xl bg-white rounded w-[72px] h-[72px]"
+        >
+          +
+        </div>
+      </div>
+
+
+
+      {checkArrayLength ? (
+            <div
+              ref={gridRef}
+              className="pl-4 bg-purple-500 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[260px]"
+            >
+              <Grid
+                grid={grid}
+                handleDeleteGrid={handleDeleteGrid}
+                handleDropdownToggle={handleDropdownToggle}
+                isDropdownOpen={isDropdownOpen}
+                dropdown={dropdown}
+              />
+            </div>
+          ) : null}
+          {checkArrayLength < 8 ? (
+            <div className="bg-purple-500 h-[104px] w-[104px] flex justify-center items-center rounded">
+              <div
+                onClick={handleAddGrid}
+                className="cursor-pointer text-4xl bg-white rounded w-[72px] h-[72px]"
+              >
+                +
+              </div>
+            </div>
+          ) : null}
+
+
+
+
+            const handleMouseDown = (event) => {
+    setDragging(true);
+    setStartX(event.pageX - gridRef.current.offsetLeft);
+    setScrollLeft(gridRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (event) => {
+    event.preventDefault();
+    if (dragging) {
+      const x = event.pageX - gridRef.current.offsetLeft;
+      console.log("x", x);
+      const walk = x - startX;
+      console.log("walk", walk);
+      gridRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+    const handleMouseDown = (event) => {
+    event.preventDefault();
+    setDragging(true);
+    setStartX(event.pageX - gridRef.current.offsetLeft);
+    setScrollLeft(gridRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (event) => {
+    event.preventDefault();
+    if (dragging) {
+      const x = event.pageX - gridRef.current.offsetLeft;
+      const walk = x - startX;
+      gridRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+    const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+
+    <div className="relative flex bg-purple-500 rounded">
+          {checkArrayLength === 0 ? (
+            null
+          ) : checkArrayLength === 8 ? (
+            <div
+              ref={sliderRef}
+              className="absolute pl-4 pr-4 bg-purple-500 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[368px]"
+              onScroll={handleScroll}
+            >
+              <Grid
+                grid={grid}
+                handleDeleteGrid={handleDeleteGrid}
+                handleDropdownToggle={handleDropdownToggle}
+                isDropdownOpen={isDropdownOpen}
+                dropdown={dropdown}
+                scrollLeft = {scrollLeft}
+                sliderRef = {sliderRef}
+              />
+            </div>
+          ) : (
+            <div
+              ref={sliderRef}
+              className="pl-4 bg-purple-500 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[264px]"
+              onScroll={handleScroll}
+            >
+              <Grid
+                grid={grid}
+                handleDeleteGrid={handleDeleteGrid}
+                handleDropdownToggle={handleDropdownToggle}
+                isDropdownOpen={isDropdownOpen}
+                dropdown={dropdown}
+                handleScroll = {handleScroll}
+                scrollLeft = {scrollLeft}
+                sliderRef = {sliderRef}
+              />
+            </div>
+          )}
+          {checkArrayLength < 8 ? (
+            <div className="bg-purple-500 h-[104px] w-[104px] flex justify-center items-center rounded">
+              <div
+                onClick={handleAddGrid}
+                className="cursor-pointer text-4xl bg-white rounded w-[72px] h-[72px]"
+              >
+                +
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+
+
+        
+          <button
+            onClick={(e) =>{
+              handleDropdownToggle(index)
+            }}
+            className=" focus:outline-none hover:bg-gray-100 rounded p-2 transition-colors duration-150 ease-in-out"
+          >
+            <HiDotsVertical
+              className="h-3 w-3 text-gray-400"
+              aria-hidden="true"
+            />
+          </button>
+          {isDropdownOpen[index] && (
+            <div className={`absolute z-30 left-0 mt-2 w-[100px] rounded shadow-lg bg-white divide-y divide-gray-100`}>
+              <div className="py-1">
+                <button className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left text-sm">
+                  Make Default
+                </button>
+                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  Update
+                </button>
+                <button
+                  onClick={() => handleDeleteGrid(index)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+
+             <div className="bg-purple-500 h-[104px] w-[104px] flex justify-center items-center rounded">
+
+
+
+
+              <div>
+        <div className="relative flex bg-purple-500 rounded">
+       <div className="relative max-w-[368px]">
+       <div className="absolute pl-4 pr-4 bg-purple-500 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit ">
+            <Grid
+              grid={grid}
+              handleDeleteGrid={handleDeleteGrid}
+              handleDropdownToggle={handleDropdownToggle}
+              isDropdownOpen={isDropdownOpen}
+              dropdown={dropdown}
+              scrollLeft={scrollLeft}
+              sliderRef={sliderRef}
+            />
+          </div>
+       </div>
+        </div>
+
+        <div
+          onClick={handleAddGrid}
+          className="relative cursor-pointer text-4xl bg-white rounded w-[72px] h-[72px]"
+        >
+          +
+        </div>
+      </div>
