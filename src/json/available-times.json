@@ -1,0 +1,65 @@
+{
+  "0": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "1": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "2": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "3": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "4": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "5": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  },
+  "6": {
+    "disabled": false,
+    "slots": [
+      {
+        "start_time": 701,
+        "end_time": 1759
+      }
+    ]
+  }
+}
