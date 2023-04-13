@@ -1,25 +1,38 @@
 import React from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, start_time, end_time }) {
-  // const slots = Slots.slots;
-  // slots.sort((a, b) => b.start_time - a.start_time);
+function TimeDivision({ day, foodSlot }) {
+  const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
+
+  console.log(foodSlot);
+
+  const sortedColor = Object.values(foodSlot)
+    .map((value, index) => {
+      const start_time = value.start_time;
+      return { start_time, index };
+    })
+    .sort((a, b) => b.start_time - a.start_time)
+    .map(({ index }) => color[index]);
+
+  const slots = Object.values(foodSlot).sort((a, b) => {
+    return b.start_time - a.start_time;
+  });
   const divs = Array.from({ length: 24 }, (_, hour) => (
     <div
       key={hour}
       className="w-1/6 h-10 bg-blue-100 border border-white relative "
     >
-      {/* {slots.map((slot) => {
+      {slots.map((slot, index) => {
         return (
           <HourSlots
+            key={index}
             hour={hour}
             start_time={slot.start_time}
             end_time={slot.end_time}
+            color={sortedColor[index]}
           />
         );
-      })} */}
-
-      <HourSlots hour={hour} start_time={start_time} end_time={end_time} />
+      })}
     </div>
   ));
   return (

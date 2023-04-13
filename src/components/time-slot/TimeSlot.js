@@ -1,15 +1,24 @@
 import React from "react";
 import AvailableTimes from "../../json/available-times.json";
 import DaySlot from "./DaySlot";
+import FoodAvailability from "../../json/food_availability.json";
 
 function TimeSlot() {
-  const availableTimes = AvailableTimes;
+  const foodAvailability = FoodAvailability;
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const result = Object.values(availableTimes).map((value) => value.slots[0]);
+  const foodSlot = {};
+  foodAvailability.food_availability.forEach((obj) => {
+    for (const [key, value] of Object.entries(obj)) {
+      if (!foodSlot[key]) {
+        foodSlot[key] = {};
+      }
+      foodSlot[key][foodAvailability.food_availability.indexOf(obj)] =
+        value.slots[0];
+    }
+  });
 
-  console.log(result);
-  
+  const foodSlotArray = Object.values(foodSlot);
 
   return (
     <div className="p-4">
@@ -23,13 +32,16 @@ function TimeSlot() {
           <div className="w-1/6 text-xl pl-[28px]">20:00</div>
           <div className="text-xl">24:00</div>
         </div>
-      {
-        result.map((res, index)=>{
+
+        {foodSlotArray.map((res, index) => {
           return (
-            <DaySlot day={daysOfWeek[index]} start_time={res.start_time} end_time={res.end_time}/>
-          )
-        })
-      }
+            <DaySlot
+              key={index}
+              day={daysOfWeek[index]}
+              foodSlot={foodSlot[index]}
+            />
+          );
+        })}
       </div>
     </div>
   );

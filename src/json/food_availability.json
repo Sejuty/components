@@ -1,0 +1,199 @@
+{
+  "food_availability": [
+    {
+      "0": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 1600,
+            "end_time": 1730
+          }
+        ]
+      },
+      "1": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 100,
+            "end_time": 200
+          }
+        ]
+      },
+      "2": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 30,
+            "end_time": 400
+          }
+        ]
+      },
+      "3": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 700,
+            "end_time": 950
+          }
+        ]
+      },
+      "4": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 900,
+            "end_time": 2000
+          }
+        ]
+      },
+      "5": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 100,
+            "end_time": 300
+          }
+        ]
+      },
+      "6": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 400,
+            "end_time": 450
+          }
+        ]
+      }
+    },
+    {
+      "0": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 2000,
+            "end_time": 2300
+          }
+        ]
+      },
+      "1": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 700,
+            "end_time": 830
+          }
+        ]
+      },
+      "2": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time":900,
+            "end_time": 1100
+          }
+        ]
+      },
+      "3": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 30,
+            "end_time":  130
+          }
+        ]
+      },
+      "4": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 400,
+            "end_time": 800
+          }
+        ]
+      },
+      "5": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 400,
+            "end_time": 800
+          }
+        ]
+      },
+      "6": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 745,
+            "end_time": 859
+          }
+        ]
+      }
+    },
+    {
+      "0": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time":30,
+            "end_time": 130
+          }
+        ]
+      },
+      "1": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 2100,
+            "end_time": 2330
+          }
+        ]
+      },
+      "2": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 500,
+            "end_time": 630
+          }
+        ]
+      },
+      "3": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 2000,
+            "end_time": 2300
+          }
+        ]
+      },
+      "4": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 100,
+            "end_time": 400
+          }
+        ]
+      },
+      "5": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 1200,
+            "end_time": 1500
+          }
+        ]
+      },
+      "6": {
+        "disabled": false,
+        "slots": [
+          {
+            "start_time": 1700,
+            "end_time": 2100
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import React from "react";
 
-function HourSlot({ hour, start_time, end_time }) {
+function HourSlot({ hour, start_time, end_time , color}) {
+
   function timeConversion(number) {
     if (number > 2359 || number < 1) return [];
     const minutes = number % 100;
@@ -24,13 +25,13 @@ function HourSlot({ hour, start_time, end_time }) {
     <div>
       {hour === end_hours ? (
         <div
-          className="absolute inset-0 bg-purple-500"
-          style={{ width: `${(end_minutes * 100) / 60}%` }}
+          className="absolute inset-0"
+          style={{ width: `${(end_minutes * 100) / 60}%` , backgroundColor : `${color}`}}
         ></div>
       ) : (
         <div
-          className="absolute inset-0 bg-purple-500"
-          style={{ width: `${trackEndHour[hour] ? 100 : 0}%` }}
+          className="absolute inset-0"
+          style={{ width: `${trackEndHour[hour] ? 100 : 0}%`,backgroundColor : `${color}` }}
         ></div>
       )}
       {hour === start_hours ? (
