@@ -1,5 +1,4 @@
 import React from "react";
-import AvailableTimes from "../../json/available-times.json";
 import DaySlot from "./DaySlot";
 import FoodAvailability from "../../json/food_availability.json";
 
