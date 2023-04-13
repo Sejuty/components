@@ -3,8 +3,8 @@
     "disabled": false,
     "slots": [
       {
-        "start_time": 701,
-        "end_time": 1759
+        "start_time": 1200,
+        "end_time": 1730
       }
     ]
   },
@@ -21,8 +21,8 @@
     "disabled": false,
     "slots": [
       {
-        "start_time": 701,
-        "end_time": 1759
+        "start_time": 30,
+        "end_time": 400
       }
     ]
   },
@@ -39,8 +39,8 @@
     "disabled": false,
     "slots": [
       {
-        "start_time": 701,
-        "end_time": 1759
+        "start_time": 750,
+        "end_time": 1000
       }
     ]
   },
@@ -48,8 +48,8 @@
     "disabled": false,
     "slots": [
       {
-        "start_time": 701,
-        "end_time": 1759
+        "start_time": 400,
+        "end_time":800
       }
     ]
   },
@@ -57,7 +57,7 @@
     "disabled": false,
     "slots": [
       {
-        "start_time": 701,
+        "start_time": 1745,
         "end_time": 1759
       }
     ]

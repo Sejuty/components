@@ -385,3 +385,47 @@
           style={{ width: "27%" }}
         ></div>
       </div>
+
+
+
+
+      import React from "react";
+
+function HoursSlot({
+  hour,
+  end_hours,
+  end_minutes,
+  trackEndHour,
+  start_minutes,
+  start_hours,
+  trackStartHour,
+}) {
+  return (
+    <div>
+      {hour === end_hours ? (
+        <div
+          className="absolute inset-0 bg-blue-500"
+          style={{ width: `${(end_minutes * 100) / 60}%` }}
+        ></div>
+      ) : (
+        <div
+          className="absolute inset-0 bg-blue-500"
+          style={{ width: `${trackEndHour[hour] ? 100 : 0}%` }}
+        ></div>
+      )}
+      {hour === start_hours ? (
+        <div
+          className="absolute inset-0 bg-blue-100"
+          style={{ width: `${(start_minutes * 100) / 60}%` }}
+        ></div>
+      ) : (
+        <div
+          className="absolute inset-0 bg-blue-100"
+          style={{ width: `${trackStartHour[hour] ? 100 : 0}%` }}
+        ></div>
+      )}
+    </div>
+  );
+}
+
+export default HoursSlot;
