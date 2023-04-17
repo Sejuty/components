@@ -4,7 +4,6 @@ import HourSlots from "./Slots";
 function TimeDivision({ day, foodSlot }) {
   const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
-  console.log(foodSlot);
 
   const sortedColor = Object.values(foodSlot)
     .map((value, index) => {

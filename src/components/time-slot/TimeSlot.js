@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DaySlot from "./DaySlot";
 import FoodAvailability from "../../json/food_availability.json";
 
@@ -19,6 +19,42 @@ function TimeSlot() {
 
   const foodSlotArray = Object.values(foodSlot);
 
+  const selectedButton = 7;
+  const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
+  const [singleSelected, setSingleSelected] = useState(checked);
+  const [selectedAll, setSelectedAll] = useState(false);
+
+  useEffect(() => {
+    setSingleSelected([...checked]);
+  }, [selectedButton]);
+
+  const toggleCheck = (index) => {
+    setSingleSelected(() => {
+      const newState = { ...singleSelected };
+      newState[index] = !singleSelected[index];
+      if (newState[index]) {
+        for (let i = 0; i < selectedButton; i++) {
+          if (index !== i) {
+            newState[i] = false;
+          }
+        }
+      }
+      return newState;
+    });
+  };
+
+  // const selectAll = () => {
+  //   const value = !selectedAll;
+  //   setSelectedAll(value);
+  //   setSingleSelected(() => {
+  //     const newState = { ...singleSelected };
+  //     for (let i = 0; i < selectedButton; i++) {
+  //       newState[i] = value;
+  //     }
+  //     return newState;
+  //   });
+  // };
+  console.log(singleSelected);
   return (
     <div className="p-4">
       <div className="flex-col space-y-2 max-w-screen">
@@ -32,7 +68,7 @@ function TimeSlot() {
           <div className="text-xl">24:00</div>
         </div>
 
-        {foodSlotArray.map((res, index) => {
+        {foodSlotArray.map((_, index) => {
           return (
             <DaySlot
               key={index}
@@ -41,6 +77,45 @@ function TimeSlot() {
             />
           );
         })}
+      </div>
+      <div className="flex mt-6 ml-[65px]">
+        <div className="w-full flex justify-between">
+          {checked.map((_, index) => {
+            return singleSelected[index] ? (
+              <div
+                key={index}
+                onClick={(e) => toggleCheck(index)}
+                className="px-4 py-2 rounded flex-1 ml-3 text-center bg-purple-500 text-white transition-all ease-in cursor-pointer duration-400"
+              >
+                {daysOfWeek[index]}
+              </div>
+            ) : (
+              <div
+                key={index}
+                onClick={(e) => toggleCheck(index)}
+                className="px-4 py-2 border-purple-200 border text-purple-500 rounded flex-1 ml-3 text-center transition-all ease-in cursor-pointer duration-400"
+              >
+                {daysOfWeek[index]}
+              </div>
+            );
+          })}
+
+          {/* {selectedAll ? (
+            <div
+              onClick={selectAll}
+              className="px-4 py-2 rounded flex-1 ml-3 text-center bg-purple-500 text-white transition-all ease-in cursor-pointer duration-400"
+            >
+              All
+            </div>
+          ) : (
+            <div
+              onClick={selectAll}
+              className="px-4 py-2 border-purple-200 border text-purple-500 rounded flex-1 ml-3 text-center transition-all ease-in cursor-pointer duration-400"
+            >
+              All
+            </div>
+          )} */}
+        </div>
       </div>
     </div>
   );
