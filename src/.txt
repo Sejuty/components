@@ -429,3 +429,34 @@ function HoursSlot({
 }
 
 export default HoursSlot;
+
+
+
+
+       {selectedAll ? (
+            <div
+              onClick={selectAll}
+              className="px-4 py-2 rounded flex-1 ml-3 text-center bg-purple-500 text-white transition-all ease-in cursor-pointer duration-400"
+            >
+              All
+            </div>
+          ) : (
+            <div
+              onClick={selectAll}
+              className="px-4 py-2 border-purple-200 border text-purple-500 rounded flex-1 ml-3 text-center transition-all ease-in cursor-pointer duration-400"
+            >
+              All
+            </div>
+          )}
+
+            // const selectAll = () => {
+  //   const value = !selectedAll;
+  //   setSelectedAll(value);
+  //   setSingleSelected(() => {
+  //     const newState = { ...singleSelected };
+  //     for (let i = 0; i < selectedButton; i++) {
+  //       newState[i] = value;
+  //     }
+  //     return newState;
+  //   });
+  // };

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import DaySlot from "./DaySlot";
 import FoodAvailability from "../../json/food_availability.json";
+import { SCButton, SCTimepicker } from "../../lib/index.cjs";
+import "../../lib/css/allspark.min.css";
 
 function TimeSlot() {
   const foodAvailability = FoodAvailability;
@@ -22,13 +24,27 @@ function TimeSlot() {
   const selectedButton = 7;
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
-  const [selectedAll, setSelectedAll] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const slot = foodSlotArray[selectedIndex];
+  const timeSlot = Object.values(slot);
+  const [slots, setSlots] = useState(timeSlot);
+
+  useEffect(() => {
+    setSlots(timeSlot);
+  }, [selectedIndex]);
 
   useEffect(() => {
     setSingleSelected([...checked]);
+    setSingleSelected(() => {
+      const newState = { ...singleSelected };
+      newState[0] = true;
+      return newState;
+    });
   }, [selectedButton]);
 
   const toggleCheck = (index) => {
+    setSelectedIndex(index);
     setSingleSelected(() => {
       const newState = { ...singleSelected };
       newState[index] = !singleSelected[index];
@@ -43,18 +59,11 @@ function TimeSlot() {
     });
   };
 
-  // const selectAll = () => {
-  //   const value = !selectedAll;
-  //   setSelectedAll(value);
-  //   setSingleSelected(() => {
-  //     const newState = { ...singleSelected };
-  //     for (let i = 0; i < selectedButton; i++) {
-  //       newState[i] = value;
-  //     }
-  //     return newState;
-  //   });
-  // };
-  console.log(singleSelected);
+  const removeSlot = (index) => {
+    const tempSlot = [...timeSlot];
+    tempSlot.splice(index, 1);
+    setSlots(tempSlot);
+  };
   return (
     <div className="p-4">
       <div className="flex-col space-y-2 max-w-screen">
@@ -82,40 +91,59 @@ function TimeSlot() {
         <div className="w-full flex justify-between">
           {checked.map((_, index) => {
             return singleSelected[index] ? (
-              <div
+              <SCButton
                 key={index}
-                onClick={(e) => toggleCheck(index)}
-                className="px-4 py-2 rounded flex-1 ml-3 text-center bg-purple-500 text-white transition-all ease-in cursor-pointer duration-400"
+                action={(e) => toggleCheck(index)}
+                size="xl"
+                variant="primary"
               >
                 {daysOfWeek[index]}
-              </div>
+              </SCButton>
             ) : (
-              <div
+              <SCButton
                 key={index}
-                onClick={(e) => toggleCheck(index)}
-                className="px-4 py-2 border-purple-200 border text-purple-500 rounded flex-1 ml-3 text-center transition-all ease-in cursor-pointer duration-400"
+                action={(e) => toggleCheck(index)}
+                size="xl"
+                variant="primary-outline"
               >
                 {daysOfWeek[index]}
-              </div>
+              </SCButton>
             );
           })}
-
-          {/* {selectedAll ? (
-            <div
-              onClick={selectAll}
-              className="px-4 py-2 rounded flex-1 ml-3 text-center bg-purple-500 text-white transition-all ease-in cursor-pointer duration-400"
-            >
-              All
-            </div>
-          ) : (
-            <div
-              onClick={selectAll}
-              className="px-4 py-2 border-purple-200 border text-purple-500 rounded flex-1 ml-3 text-center transition-all ease-in cursor-pointer duration-400"
-            >
-              All
-            </div>
-          )} */}
         </div>
+      </div>
+
+      <div className="flex-col mt-6 ml-[45px]">
+        {slots.map((s, index) => {
+          return (
+            <div className="w-full flex justify-between" key={index}>
+              <div className="px-4 py-2 rounded flex-1 ">
+                <SCTimepicker label="Start Time" value={s.start_time} />
+              </div>
+              <div className="px-4 py-2 rounded flex-1">
+                <SCTimepicker label="End Time" value={s.end_time} />
+              </div>
+              <div
+                onClick={(e) => removeSlot(index)}
+                className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+              >
+                <div>Remove Hour</div>
+              </div>
+              <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                <div>Custom Hours</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        <SCButton
+          size="lg"
+          variant="primary-outline"
+          className="ml-[60px] mt-4"
+        >
+          <span className="ml-2">Add New Hour</span>
+        </SCButton>
       </div>
     </div>
   );
