@@ -7,16 +7,17 @@ import "../../lib/css/allspark.min.css";
 function TimeSlot() {
   const foodAvailability = FoodAvailability;
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const tempFoodSlot = {};
   const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
-  const [foodSlot, setFoodSlot] = useState({});
+  const [foodSlot, setFoodSlot] = useState(tempFoodSlot);
 
   foodAvailability.food_availability.forEach((obj) => {
     for (const [key, value] of Object.entries(obj)) {
-      if (!foodSlot[key]) {
-        foodSlot[key] = {};
+      if (!tempFoodSlot[key]) {
+        tempFoodSlot[key] = {};
       }
-      foodSlot[key][foodAvailability.food_availability.indexOf(obj)] =
+      tempFoodSlot[key][foodAvailability.food_availability.indexOf(obj)] =
         value.slots[0];
     }
   });
@@ -32,38 +33,19 @@ function TimeSlot() {
   const [slots, setSlots] = useState(timeSlot);
   const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot[selectedIndex]);
 
-
-  const sortedColor = Object.values(dayFoodSlot)
-    .map((value, index) => {
-      const start_time = value.start_time;
-      return { start_time, index };
-    })
-    .sort((a, b) => b.start_time - a.start_time)
-    .map(({ index }) => color[index]);
-
-  const daySlots = Object.values(dayFoodSlot).sort((a, b) => {
-    return b.start_time - a.start_time;
-  });
-
-
   useEffect(() => {
     setSlots(timeSlot);
-   
   }, [selectedIndex]);
-
-  useEffect(()=>{
-    setDayFoodSlot(slots)
-  }, [slots])
-
 
   useEffect(() => {
     setSingleSelected([...checked]);
     setSingleSelected(() => {
-      const newState = {...singleSelected };
+      const newState = { ...singleSelected };
       newState[0] = true;
       return newState;
     });
   }, [selectedButton]);
+
 
   const toggleCheck = (index) => {
     setSelectedIndex(index);
@@ -81,15 +63,45 @@ function TimeSlot() {
     });
   };
 
-  const removeSlot = (index) => {
+  const removeSlot = (i) => {
     const tempSlot = [...timeSlot];
-    tempSlot.splice(index, 1);
+    tempSlot.splice(i, 1);
     setSlots(tempSlot);
+    // console.log(slots)
+
+    // console.log(i);
+
+    // const tempFoodSlot = [...foodSlotArray]
+
+    // const temp = tempFoodSlot.forEach((food, index) => {
+    //   if (index === selectedIndex) {
+    //     const f = Object.values(food);
+    //     f.splice(i, 1);
+    //     setSlots(f);
+    //   }
+    // });
+
+    // console.log(temp)
+
+    // setFoodSlot({})
+
+    console.log("hi");
+
+    // console.log(tempFoodSlot)
+
+    // console.log(foodSlotArray)
     // const newFoodSlot = { ...foodSlot };
-    // newFoodSlot[selectedIndex] = {...tempSlot}
-    // console.log(newFoodSlot)
-    // setFoodSlot(newFoodSlot)
+    // console.log(slots);
+    // newFoodSlot[selectedIndex] = { ...slots };
+    // console.log("newFoodSlot", newFoodSlot);
   };
+  useEffect(() => {
+    let newFoodSlot = { ...foodSlot };
+    newFoodSlot[selectedIndex] = { ...slots };
+    setFoodSlot(newFoodSlot)
+  }, [slots]);
+
+  console.log(foodSlot)
 
   return (
     <div className="p-4">
@@ -105,15 +117,15 @@ function TimeSlot() {
         </div>
 
         {foodSlotArray.map((_, index) => {
-          return  (
+          return (
             <DaySlot
               key={index}
               day={daysOfWeek[index]}
               foodSlot={foodSlotArray[index]}
-              color={color}
               dayFoodSlot={dayFoodSlot}
-              sortedColor={sortedColor}
-              daySlots={daySlots}
+              color = {color}
+              daySlot={slots}
+              selectedIndex={selectedIndex}
             />
           );
         })}

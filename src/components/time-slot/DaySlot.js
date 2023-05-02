@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, dayFoodSlot, sortedColor,daySlots}) {
+function TimeDivision({ day, foodSlot,color}) {
+
+  
+
+  
+  const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot);
+  
+  useEffect(()=>{
+    setDayFoodSlot(foodSlot)
+  },[foodSlot])
+
+  const sortedColor = Object.values(dayFoodSlot)
+    .map((value, index) => {
+      const start_time = value.start_time;
+      return { start_time, index };
+    })
+    .sort((a, b) => b.start_time - a.start_time)
+    .map(({ index }) => color[index]);
+
+  const slots = Object.values(dayFoodSlot).sort((a, b) => {
+    return b.start_time - a.start_time;
+  });
   const divs = Array.from({ length: 24 }, (_, hour) => (
     <div
       key={hour}
       className="w-1/6 h-10 bg-blue-100 border border-white relative "
     >
-      {daySlots.map((slot, index) => {
+      {slots.map((slot, index) => {
         return (
           <HourSlots
             key={index}
