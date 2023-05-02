@@ -7,8 +7,10 @@ import "../../lib/css/allspark.min.css";
 function TimeSlot() {
   const foodAvailability = FoodAvailability;
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
-  const foodSlot = {};
+  const [foodSlot, setFoodSlot] = useState({});
+
   foodAvailability.food_availability.forEach((obj) => {
     for (const [key, value] of Object.entries(obj)) {
       if (!foodSlot[key]) {
@@ -25,19 +27,39 @@ function TimeSlot() {
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
   const slot = foodSlotArray[selectedIndex];
   const timeSlot = Object.values(slot);
   const [slots, setSlots] = useState(timeSlot);
+  const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot[selectedIndex]);
+
+
+  const sortedColor = Object.values(dayFoodSlot)
+    .map((value, index) => {
+      const start_time = value.start_time;
+      return { start_time, index };
+    })
+    .sort((a, b) => b.start_time - a.start_time)
+    .map(({ index }) => color[index]);
+
+  const daySlots = Object.values(dayFoodSlot).sort((a, b) => {
+    return b.start_time - a.start_time;
+  });
+
 
   useEffect(() => {
     setSlots(timeSlot);
+   
   }, [selectedIndex]);
+
+  useEffect(()=>{
+    setDayFoodSlot(slots)
+  }, [slots])
+
 
   useEffect(() => {
     setSingleSelected([...checked]);
     setSingleSelected(() => {
-      const newState = { ...singleSelected };
+      const newState = {...singleSelected };
       newState[0] = true;
       return newState;
     });
@@ -63,7 +85,12 @@ function TimeSlot() {
     const tempSlot = [...timeSlot];
     tempSlot.splice(index, 1);
     setSlots(tempSlot);
+    // const newFoodSlot = { ...foodSlot };
+    // newFoodSlot[selectedIndex] = {...tempSlot}
+    // console.log(newFoodSlot)
+    // setFoodSlot(newFoodSlot)
   };
+
   return (
     <div className="p-4">
       <div className="flex-col space-y-2 max-w-screen">
@@ -78,11 +105,15 @@ function TimeSlot() {
         </div>
 
         {foodSlotArray.map((_, index) => {
-          return (
+          return  (
             <DaySlot
               key={index}
               day={daysOfWeek[index]}
-              foodSlot={foodSlot[index]}
+              foodSlot={foodSlotArray[index]}
+              color={color}
+              dayFoodSlot={dayFoodSlot}
+              sortedColor={sortedColor}
+              daySlots={daySlots}
             />
           );
         })}

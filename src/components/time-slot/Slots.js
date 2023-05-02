@@ -1,7 +1,6 @@
 import React from "react";
 
 function HourSlot({ hour, start_time, end_time , color}) {
-
   function timeConversion(number) {
     if (number > 2359 || number < 1) return [];
     const minutes = number % 100;

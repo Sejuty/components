@@ -460,3 +460,223 @@ export default HoursSlot;
   //     return newState;
   //   });
   // };
+
+
+
+  import React, { useEffect, useState } from "react";
+import DaySlot from "./DaySlot";
+import FoodAvailability from "../../json/food_availability.json";
+import { SCButton, SCTimepicker } from "../../lib/index.cjs";
+import "../../lib/css/allspark.min.css";
+
+function TimeSlot() {
+  const foodAvailability = FoodAvailability;
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
+
+  const [foodSlot, setFoodSlot] = useState({});
+
+  foodAvailability.food_availability.forEach((obj) => {
+    for (const [key, value] of Object.entries(obj)) {
+      if (!foodSlot[key]) {
+        foodSlot[key] = {};
+      }
+      foodSlot[key][foodAvailability.food_availability.indexOf(obj)] =
+        value.slots[0];
+    }
+  });
+
+  const foodSlotArray = Object.values(foodSlot);
+
+  const selectedButton = 7;
+  const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
+  const [singleSelected, setSingleSelected] = useState(checked);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const slot = foodSlotArray[selectedIndex];
+  const timeSlot = Object.values(slot);
+  const [slots, setSlots] = useState(timeSlot);
+  const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot[selectedIndex]);
+
+
+  const sortedColor = Object.values(dayFoodSlot)
+    .map((value, index) => {
+      const start_time = value.start_time;
+      return { start_time, index };
+    })
+    .sort((a, b) => b.start_time - a.start_time)
+    .map(({ index }) => color[index]);
+
+  const daySlots = Object.values(dayFoodSlot).sort((a, b) => {
+    return b.start_time - a.start_time;
+  });
+
+
+  useEffect(() => {
+    setSlots(timeSlot);
+   
+  }, [selectedIndex]);
+
+  useEffect(()=>{
+    setDayFoodSlot(slots)
+  }, [slots])
+
+
+  useEffect(() => {
+    setSingleSelected([...checked]);
+    setSingleSelected(() => {
+      const newState = {...singleSelected };
+      newState[0] = true;
+      return newState;
+    });
+  }, [selectedButton]);
+
+  const toggleCheck = (index) => {
+    setSelectedIndex(index);
+    setSingleSelected(() => {
+      const newState = { ...singleSelected };
+      newState[index] = !singleSelected[index];
+      if (newState[index]) {
+        for (let i = 0; i < selectedButton; i++) {
+          if (index !== i) {
+            newState[i] = false;
+          }
+        }
+      }
+      return newState;
+    });
+  };
+
+  const removeSlot = (index) => {
+    const tempSlot = [...timeSlot];
+    tempSlot.splice(index, 1);
+    setSlots(tempSlot);
+
+  };
+
+  return (
+    <div className="p-4">
+      <div className="flex-col space-y-2 max-w-screen">
+        <div className="flex">
+          <div className="w-1/6 text-xl pl-16">00:00</div>
+          <div className="w-1/6 text-xl pl-[36px]">04:00</div>
+          <div className="w-1/6 text-xl pl-[34px]">08:00</div>
+          <div className="w-1/6 text-xl pl-[32px]">12:00</div>
+          <div className="w-1/6 text-xl pl-[30px]">16:00</div>
+          <div className="w-1/6 text-xl pl-[28px]">20:00</div>
+          <div className="text-xl">24:00</div>
+        </div>
+
+        {foodSlotArray.map((_, index) => {
+          return  (
+            <DaySlot
+              key={index}
+              day={daysOfWeek[index]}
+              foodSlot={foodSlotArray[index]}
+              color={color}
+              dayFoodSlot={dayFoodSlot}
+              sortedColor={sortedColor}
+              daySlots={daySlots}
+            />
+          );
+        })}
+      </div>
+      <div className="flex mt-6 ml-[65px]">
+        <div className="w-full flex justify-between">
+          {checked.map((_, index) => {
+            return singleSelected[index] ? (
+              <SCButton
+                key={index}
+                action={(e) => toggleCheck(index)}
+                size="xl"
+                variant="primary"
+              >
+                {daysOfWeek[index]}
+              </SCButton>
+            ) : (
+              <SCButton
+                key={index}
+                action={(e) => toggleCheck(index)}
+                size="xl"
+                variant="primary-outline"
+              >
+                {daysOfWeek[index]}
+              </SCButton>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="flex-col mt-6 ml-[45px]">
+        {slots.map((s, index) => {
+          return (
+            <div className="w-full flex justify-between" key={index}>
+              <div className="px-4 py-2 rounded flex-1 ">
+                <SCTimepicker label="Start Time" value={s.start_time} />
+              </div>
+              <div className="px-4 py-2 rounded flex-1">
+                <SCTimepicker label="End Time" value={s.end_time} />
+              </div>
+              <div
+                onClick={(e) => removeSlot(index)}
+                className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+              >
+                <div>Remove Hour</div>
+              </div>
+              <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                <div>Custom Hours</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div>
+        <SCButton
+          size="lg"
+          variant="primary-outline"
+          className="ml-[60px] mt-4"
+        >
+          <span className="ml-2">Add New Hour</span>
+        </SCButton>
+      </div>
+    </div>
+  );
+}
+
+export default TimeSlot;
+
+
+import React, { useState } from "react";
+import HourSlots from "./Slots";
+
+function TimeDivision({ day, dayFoodSlot, sortedColor,daySlots}) {
+
+  console.log(daySlots)
+  const divs = Array.from({ length: 24 }, (_, hour) => (
+    <div
+      key={hour}
+      className="w-1/6 h-10 bg-blue-100 border border-white relative "
+    >
+      {daySlots.map((slot, index) => {
+        return (
+          <HourSlots
+            key={index}
+            hour={hour}
+            start_time={slot.start_time}
+            end_time={slot.end_time}
+            color={sortedColor[index]}
+          />
+        );
+      })}
+    </div>
+  ));
+  return (
+    <div className="flex">
+      <div className="flex w-[250px] h-[30px] justify-end pr-2 text-xl">
+        {day}
+      </div>
+      {divs}
+    </div>
+  );
+}
+
+export default TimeDivision;
