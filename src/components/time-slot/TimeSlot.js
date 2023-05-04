@@ -1,37 +1,57 @@
 import React, { useEffect, useState } from "react";
-import DaySlot from "./DaySlot";
 import FoodAvailability from "../../json/food_availability.json";
-import { SCButton, SCTimepicker } from "../../lib/index.cjs";
+import ModifiedFoodAvailability from "../../json/modified_food_availability.json";
 import "../../lib/css/allspark.min.css";
+import { SCButton, SCTimepicker } from "../../lib/index.cjs";
+import DaySlot from "./DaySlot";
 
 function TimeSlot() {
-  const foodAvailability = FoodAvailability;
+  const foodAvailability = FoodAvailability.food_availability;
+  const colors = ["#79c5f5", "#95f7b3", "#f4f57a"];
+
+  const modified = ModifiedFoodAvailability.sections;
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempFoodSlot = {};
-  const color = ["#79c5f5", "#95f7b3", "#f4f57a"];
+  const tempFoodSlot2 = {};
 
-  const [foodSlot, setFoodSlot] = useState(tempFoodSlot);
+  modified.forEach((m, index) => {
+    const temp = Object.values(m.available_times);
+    temp.forEach((t) => {
+      t.slots.color = colors[index];
+    });
+  });
 
-  foodAvailability.food_availability.forEach((obj) => {
-    for (const [key, value] of Object.entries(obj)) {
-      if (!tempFoodSlot[key]) {
-        tempFoodSlot[key] = {};
+  modified.forEach((obj) => {
+    const available_times = Object.values(obj.available_times);
+    console.log(obj.available_times);
+    const id = obj.color;
+    for (const [key, value] of Object.entries(available_times)) {
+      if (!tempFoodSlot2[key]) {
+        tempFoodSlot2[key] = [];
       }
-      tempFoodSlot[key][foodAvailability.food_availability.indexOf(obj)] =
-        value.slots[0];
+      tempFoodSlot2[key].push(value.slots);
     }
   });
 
+  // foodAvailability.forEach((obj) => {
+  //   for (const [key, value] of Object.entries(obj)) {
+  //     if (!tempFoodSlot[key]) {
+  //       tempFoodSlot[key] = {};
+  //     }
+  //     tempFoodSlot[key][foodAvailability.indexOf(obj)] = value.slots[0];
+  //   }
+  // });
+  const [foodSlot, setFoodSlot] = useState(tempFoodSlot2);
   const foodSlotArray = Object.values(foodSlot);
-
   const selectedButton = 7;
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [deletedIndex, setDeletedIndex] = useState(undefined);
   const slot = foodSlotArray[selectedIndex];
   const timeSlot = Object.values(slot);
   const [slots, setSlots] = useState(timeSlot);
-  const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot[selectedIndex]);
 
   useEffect(() => {
     setSlots(timeSlot);
@@ -45,7 +65,6 @@ function TimeSlot() {
       return newState;
     });
   }, [selectedButton]);
-
 
   const toggleCheck = (index) => {
     setSelectedIndex(index);
@@ -67,41 +86,14 @@ function TimeSlot() {
     const tempSlot = [...timeSlot];
     tempSlot.splice(i, 1);
     setSlots(tempSlot);
-    // console.log(slots)
-
-    // console.log(i);
-
-    // const tempFoodSlot = [...foodSlotArray]
-
-    // const temp = tempFoodSlot.forEach((food, index) => {
-    //   if (index === selectedIndex) {
-    //     const f = Object.values(food);
-    //     f.splice(i, 1);
-    //     setSlots(f);
-    //   }
-    // });
-
-    // console.log(temp)
-
-    // setFoodSlot({})
-
-    console.log("hi");
-
-    // console.log(tempFoodSlot)
-
-    // console.log(foodSlotArray)
-    // const newFoodSlot = { ...foodSlot };
-    // console.log(slots);
-    // newFoodSlot[selectedIndex] = { ...slots };
-    // console.log("newFoodSlot", newFoodSlot);
   };
   useEffect(() => {
     let newFoodSlot = { ...foodSlot };
     newFoodSlot[selectedIndex] = { ...slots };
-    setFoodSlot(newFoodSlot)
+    setFoodSlot(newFoodSlot);
   }, [slots]);
 
-  console.log(foodSlot)
+  const tempColor = [];
 
   return (
     <div className="p-4">
@@ -122,10 +114,10 @@ function TimeSlot() {
               key={index}
               day={daysOfWeek[index]}
               foodSlot={foodSlotArray[index]}
-              dayFoodSlot={dayFoodSlot}
-              color = {color}
               daySlot={slots}
               selectedIndex={selectedIndex}
+              timeSlotIndex={index}
+              tempColor={tempColor}
             />
           );
         })}
@@ -157,26 +149,28 @@ function TimeSlot() {
       </div>
 
       <div className="flex-col mt-6 ml-[45px]">
-        {slots.map((s, index) => {
-          return (
-            <div className="w-full flex justify-between" key={index}>
-              <div className="px-4 py-2 rounded flex-1 ">
-                <SCTimepicker label="Start Time" value={s.start_time} />
+        {slots.map((slot, index) => {
+          return slot.map((s,index2) => {
+            return (
+              <div className="w-full flex justify-between" key={index2}>
+                <div className="px-4 py-2 rounded flex-1 ">
+                  <SCTimepicker label="Start Time" value={s.start_time} />
+                </div>
+                <div className="px-4 py-2 rounded flex-1">
+                  <SCTimepicker label="End Time" value={s.end_time} />
+                </div>
+                <div
+                  onClick={(e) => removeSlot(index)}
+                  className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+                >
+                  <div>Remove Hour</div>
+                </div>
+                <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                  <div>Custom Hours</div>
+                </div>
               </div>
-              <div className="px-4 py-2 rounded flex-1">
-                <SCTimepicker label="End Time" value={s.end_time} />
-              </div>
-              <div
-                onClick={(e) => removeSlot(index)}
-                className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
-              >
-                <div>Remove Hour</div>
-              </div>
-              <div className="px-4 py-2 rounded flex-1 text-center mt-7">
-                <div>Custom Hours</div>
-              </div>
-            </div>
-          );
+            );
+          });
         })}
       </div>
       <div>
