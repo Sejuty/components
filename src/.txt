@@ -1496,3 +1496,30 @@ export default TimeDivision;
         }
       ]
     }
+
+
+
+
+
+    
+
+  // console.log(slots)
+  // const sortedColor = Object.values(dayFoodSlot)
+  //   .map((value, index) => {
+  //     const start_time = value.start_time;
+  //     return { start_time, index };
+  //   })
+  //   .sort((a, b) => b.start_time - a.start_time)
+  //   .map(({ index }) => colors[index]);
+
+  // useEffect(() => {
+  //   if (tempColor.length < 7) {
+  //     tempColor.push([...sortedColor]);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   setFoodColor(tempColor[timeSlotIndex]);
+  // }, [tempColor.length]);
+
+  // const [foodColor, setFoodColor] = useState([]);

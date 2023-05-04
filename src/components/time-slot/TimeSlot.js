@@ -12,19 +12,22 @@ function TimeSlot() {
   const modified = ModifiedFoodAvailability.sections;
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const tempFoodSlot = {};
+  // const tempFoodSlot = {};
   const tempFoodSlot2 = {};
 
   modified.forEach((m, index) => {
     const temp = Object.values(m.available_times);
     temp.forEach((t) => {
-      t.slots.color = colors[index];
+      t.slots.forEach(s=>{
+        s.color = colors[index]
+      })
     });
   });
 
+  // console.log("modified", modified)
+
   modified.forEach((obj) => {
     const available_times = Object.values(obj.available_times);
-    console.log(obj.available_times);
     const id = obj.color;
     for (const [key, value] of Object.entries(available_times)) {
       if (!tempFoodSlot2[key]) {
@@ -34,21 +37,12 @@ function TimeSlot() {
     }
   });
 
-  // foodAvailability.forEach((obj) => {
-  //   for (const [key, value] of Object.entries(obj)) {
-  //     if (!tempFoodSlot[key]) {
-  //       tempFoodSlot[key] = {};
-  //     }
-  //     tempFoodSlot[key][foodAvailability.indexOf(obj)] = value.slots[0];
-  //   }
-  // });
   const [foodSlot, setFoodSlot] = useState(tempFoodSlot2);
   const foodSlotArray = Object.values(foodSlot);
   const selectedButton = 7;
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [deletedIndex, setDeletedIndex] = useState(undefined);
   const slot = foodSlotArray[selectedIndex];
   const timeSlot = Object.values(slot);
   const [slots, setSlots] = useState(timeSlot);
@@ -82,11 +76,14 @@ function TimeSlot() {
     });
   };
 
-  const removeSlot = (i) => {
+
+
+  const removeSlot = (index, index2) => {
     const tempSlot = [...timeSlot];
-    tempSlot.splice(i, 1);
+    tempSlot[index].splice(index2,1)
     setSlots(tempSlot);
   };
+  
   useEffect(() => {
     let newFoodSlot = { ...foodSlot };
     newFoodSlot[selectedIndex] = { ...slots };
@@ -160,7 +157,7 @@ function TimeSlot() {
                   <SCTimepicker label="End Time" value={s.end_time} />
                 </div>
                 <div
-                  onClick={(e) => removeSlot(index)}
+                  onClick={(e) => removeSlot(index,index2)}
                   className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
                 >
                   <div>Remove Hour</div>
