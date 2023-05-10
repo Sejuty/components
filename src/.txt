@@ -1655,3 +1655,91 @@ function ProductSlot({
 }
 
 export default ProductSlot;
+
+
+function handleColor(e, id) {
+  const container = document.getElementById('container');
+  
+  const div = document.createElement('div');
+  div.textContent = JSON.stringify(matched);
+  container.appendChild(div);
+}
+
+function MyButtons() {
+  return (
+    <div>
+      <SCButton
+        key={2943}
+        variant="primary"
+        size="sm"
+        action={(e) => handleColor(e, 2943)}
+      >
+        2943
+      </SCButton>
+      <SCButton
+        key={2945}
+        variant="primary"
+        size="sm"
+        action={(e) => handleColor(e, 2945)}
+      >
+        2945
+      </SCButton>
+      <SCButton
+        key={2944}
+        variant="primary"
+        size="sm"
+        action={(e) => handleColor(e, 2944)}
+      >
+        2944
+      </SCButton>
+      <div id="container"></div>
+    </div>
+  );
+}
+
+
+const arr = [
+  {id: 1, name: 'John'},
+  {id: 2, name: 'Jane'},
+  {id: 3, name: 'Bob'}
+];
+
+const obj = arr.reduce((acc, cur) => {
+  acc[cur.id] = cur;
+  return acc;
+}, {});
+
+console.log(obj);
+
+
+    <div className="flex-col" key={index}>
+              <div className="w-full flex justify-between">
+                <div className="px-4 py-2 rounded flex-1">
+                  <SCTimepicker
+                    label="Start Time"
+                    value={s.start_time}
+                    handleChange={(value) => {
+                      handleStartValue(value, index);
+                    }}
+                  />
+                </div>
+                <div className="px-4 py-2 rounded flex-1">
+                  <SCTimepicker
+                    label="End Time"
+                    value={s.end_time}
+                    handleChange={(value) => {
+                      handleEndValue(value, index);
+                    }}
+                  />
+                </div>
+                <div
+                  onClick={(e) => removeSlot(selectedSection, index)}
+                  className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+                >
+                  <div>Remove Hour</div>
+                </div>
+                <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                  <div>Custom Hours</div>
+                </div>
+              </div>
+            </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, foodSlot}) {
+function TimeDivision({ day, foodSlot }) {
   const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot);
 
   const sorted = [];
@@ -15,10 +15,28 @@ function TimeDivision({ day, foodSlot}) {
     return b.start_time - a.start_time;
   });
 
-  const divs = Array.from({ length: 24 }, (_, hour) => (
-    <div
+  const divs = Array.from({ length: 24 }, (_, hour) => {
+   return slots.length ? (
+      <div
+        key={hour}
+        className="w-1/6 h-10 bg-blue-100 border border-white relative "
+      >
+        {slots.map((slot, index) => {
+          return (
+            <HourSlots
+              key={index}
+              hour={hour}
+              start_time={slot.start_time}
+              end_time={slot.end_time}
+              color={slot.color}
+            />
+          );
+        })}
+      </div>
+    ) : (
+      <div
       key={hour}
-      className="w-1/6 h-10 bg-blue-100 border border-white relative "
+      className="w-1/6 h-10 bg-gray-200 border border-white relative "
     >
       {slots.map((slot, index) => {
         return (
@@ -32,7 +50,8 @@ function TimeDivision({ day, foodSlot}) {
         );
       })}
     </div>
-  ));
+    );
+  });
   return (
     <div className="flex">
       <div className="flex w-[250px] h-[30px] justify-end pr-2 text-xl">

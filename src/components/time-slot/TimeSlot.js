@@ -3,19 +3,20 @@ import ModifiedFoodAvailability from "../../json/modified_food_availability.json
 import "../../lib/css/allspark.min.css";
 import { SCButton, SCTimepicker } from "../../lib/index.cjs";
 import DaySlot from "./DaySlot";
-import Empty from "../../json/empty.json"
+import Empty from "../../json/empty.json";
 
 function TimeSlot() {
   const colors = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
   const modified = ModifiedFoodAvailability.sections;
-  // const modified = Empty
+  const id = [];
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempFoodSlot2 = {};
 
   modified.forEach((m, index) => {
     const temp = Object.values(m.available_times);
+    id.push(m.id);
     temp.forEach((t) => {
       t.slots.forEach((s) => {
         s.color = colors[index];
@@ -42,7 +43,8 @@ function TimeSlot() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const timeSlot = Object.values(foodSlotArray[selectedIndex]);
   const [slots, setSlots] = useState(timeSlot);
-  const [buttonSelected, setButtonSelected] = useState([false, false, false]);
+  const sectionButton = [...new Array(3)].map((_, idx) => idx === false);
+  const [buttonSelected, setButtonSelected] = useState(sectionButton);
 
   useEffect(() => {
     setSlots(timeSlot);
@@ -75,7 +77,7 @@ function TimeSlot() {
 
   const removeSlot = (index, index2) => {
     const tempSlot = [...timeSlot];
-    tempSlot[index].splice(index2, 1);
+    tempSlot[index]?.splice(index2, 1);
     setSlots(tempSlot);
   };
 
@@ -85,14 +87,14 @@ function TimeSlot() {
     setFoodSlot(newFoodSlot);
   }, [slots]);
 
-  const buttonTitles = ["blue", "green", "yellow"];
   const [selectedSection, setSelectedSection] = useState(0);
-  const [range, setRange] = useState(0);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(0);
   const [slot, setSlot] = useState([]);
+  const [pid, setPid] = useState(null);
 
-  const handleColor = (index) => {
+  const handleColor = (e, index) => {
+    setPid(e.target.textContent);
     setSlot(slots[index]);
     setSelectedSection(index);
     setButtonSelected(() => {
@@ -115,7 +117,6 @@ function TimeSlot() {
   };
 
   const handleStartValue = (value, index) => {
-    setRange(index);
     setStart(value);
     const tempSlot = [...slot];
     tempSlot[index].start_time = value;
@@ -123,7 +124,6 @@ function TimeSlot() {
     setStart(0);
   };
   const handleEndValue = (value, index) => {
-    setRange(index);
     setEnd(value);
     const tempSlot = [...slot];
     tempSlot[index].end_time = value;
@@ -132,6 +132,7 @@ function TimeSlot() {
   };
 
   const addNewHour = (index) => {
+ 
     const temp = {};
     temp.start_time = start;
     temp.end_time = end;
@@ -143,13 +144,25 @@ function TimeSlot() {
 
   const allFalse = buttonSelected.every((value) => value === false);
 
-  console.log("slot", slot);
-  console.log("slots", slots);
+  const idKey = slots.reduce((acc, cur) => {
+    cur.forEach((item) => {
+      if (acc[item.id]) {
+        acc[item.id].push(item);
+      } else {
+        acc[item.id] = [item];
+      }
+    });
+    return acc;
+  }, {});
+
+  console.log(idKey);
 
   useEffect(() => {
-    setButtonSelected([false, false, false]);
-    setSlot([])
+    setButtonSelected(sectionButton);
+    setSlot([]);
   }, [selectedIndex]);
+
+  console.log(buttonSelected)
 
   return (
     <div className="p-4">
@@ -205,63 +218,65 @@ function TimeSlot() {
 
       <div>
         <div className="mt-4">
-          {buttonTitles.map((title, index) => {
+          {buttonSelected.map((_, index) => {
             return buttonSelected[index] ? (
               <SCButton
                 key={index}
                 variant="primary"
                 size="sm"
-                action={(e) => handleColor(index)}
+                action={(e) => handleColor(e, index)}
               >
-                {title}
+                {id[index]}
               </SCButton>
             ) : (
               <SCButton
                 key={index}
                 variant="primary-outline"
                 size="sm"
-                action={(e) => handleColor(index)}
+                action={(e) => handleColor(e, index)}
               >
-                {title}
+                {id[index]}
               </SCButton>
             );
           })}
         </div>
-        {slot.map((s, index) => {
-          return (
-            <div className="flex-col" key={index}>
-              <div className="w-full flex justify-between">
-                <div className="px-4 py-2 rounded flex-1">
-                  <SCTimepicker
-                    label="Start Time"
-                    value={s.start_time}
-                    handleChange={(value) => {
-                      handleStartValue(value, index);
-                    }}
-                  />
-                </div>
-                <div className="px-4 py-2 rounded flex-1">
-                  <SCTimepicker
-                    label="End Time"
-                    value={s.end_time}
-                    handleChange={(value) => {
-                      handleEndValue(value, index);
-                    }}
-                  />
-                </div>
-                <div
-                  onClick={(e) => removeSlot(selectedSection, index)}
-                  className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
-                >
-                  <div>Remove Hour</div>
-                </div>
-                <div className="px-4 py-2 rounded flex-1 text-center mt-7">
-                  <div>Custom Hours</div>
+        {pid && !allFalse && (
+          <div>
+            {idKey[pid]?.map((s, index) => (
+              <div className="flex-col" key={index}>
+                <div className="w-full flex justify-between">
+                  <div className="px-4 py-2 rounded flex-1">
+                    <SCTimepicker
+                      label="Start Time"
+                      value={s.start_time}
+                      handleChange={(value) => {
+                        handleStartValue(value, index);
+                      }}
+                    />
+                  </div>
+                  <div className="px-4 py-2 rounded flex-1">
+                    <SCTimepicker
+                      label="End Time"
+                      value={s.end_time}
+                      handleChange={(value) => {
+                        handleEndValue(value, index);
+                      }}
+                    />
+                  </div>
+                  <div
+                    onClick={(e) => removeSlot(selectedSection, index)}
+                    className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+                  >
+                    <div>Remove Hour</div>
+                  </div>
+                  <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                    <div>Custom Hours</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            ))}
+          </div>
+        )}
 
         {allFalse ? null : (
           <SCButton
