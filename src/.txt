@@ -1523,3 +1523,135 @@ export default TimeDivision;
   // }, [tempColor.length]);
 
   // const [foodColor, setFoodColor] = useState([]);
+
+
+
+import React, { useState } from 'react';
+
+function App() {
+  const [data, setData] = useState({
+    "0": {
+      "start_time": 1600,
+      "end_time": 1730,
+      "color": "#79c5f5",
+      "id": 2943
+    },
+    "1": {
+      "start_time": 1600,
+      "end_time": 1730,
+      "color": "#79c5f5",
+      "id": 2944
+    },
+    "2": {
+      "start_time": 1600,
+      "end_time": 1730,
+      "color": "#79c5f5",
+      "id": 2945
+    }
+  });
+
+  const [selectedData, setSelectedData] = useState(null);
+
+  const handleClick = (id) => {
+    setSelectedData(data[id]);
+  }
+
+  return (
+    <div>
+      <button onClick={() => handleClick("0")}>Blue</button>
+      <button onClick={() => handleClick("1")}>Green</button>
+      <button onClick={() => handleClick("2")}>Yellow</button>
+      {selectedData &&
+        <div>
+          <p>Start Time: {selectedData.start_time}</p>
+          <p>End Time: {selectedData.end_time}</p>
+          <p>Color: {selectedData.color}</p>
+          <p>ID: {selectedData.id}</p>
+        </div>
+      }
+    </div>
+  );
+}
+
+export default App;
+
+
+import React, { useEffect, useState } from "react";
+import { SCTimepicker, SCButton } from "../../lib/index.cjs";
+
+function ProductSlot({
+  slots,
+  removeSlot,
+  singleSelected,
+  handleColor,
+  setButtonSelected,
+  buttonSelected,
+}) {
+  const buttonTitles = ["blue", "green", "yellow"];
+  const [addNewHour, setAddNewHour] = useState([])
+
+  useEffect(() => {
+    setButtonSelected([false, false, false]);
+  }, [singleSelected]);
+
+  const handleNewSlot = () => {
+    console.log(addNewHour);
+  };
+
+  console.log(slots)
+
+  return (
+    <div>
+      <div className="mt-4">
+        {buttonTitles.map((title, index) => (
+          <SCButton
+            key={index}
+            variant="primary-outline"
+            size="sm"
+            action={(e) => handleColor(index)}
+          >
+            {title}
+          </SCButton>
+        ))}
+      </div>
+      <div className="flex-col mt-6 ml-[45px]">
+        {slots.map((slot, index) => {
+ 
+          return slot.map((s, index2) => {
+            return buttonSelected[index] ? (
+              <div className="flex-col">
+                <div className="w-full flex justify-between" key={index2}>
+                  <div className="px-4 py-2 rounded flex-1 ">
+                    <SCTimepicker label="Start Time" value={s.start_time} />
+                  </div>
+                  <div className="px-4 py-2 rounded flex-1">
+                    <SCTimepicker label="End Time" value={s.end_time} />
+                  </div>
+                  <div
+                    onClick={(e) => removeSlot(index, index2)}
+                    className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
+                  >
+                    <div>Remove Hour</div>
+                  </div>
+                  <div className="px-4 py-2 rounded flex-1 text-center mt-7">
+                    <div>Custom Hours</div>
+                  </div>
+                </div>
+              </div>
+            ) : null;
+          });
+        })}
+        <SCButton
+          size="lg"
+          variant="primary-outline"
+          className="ml-[20px] mt-4"
+          action={handleNewSlot}
+        >
+          <span className="ml-2">Add New Hour</span>
+        </SCButton>
+      </div>
+    </div>
+  );
+}
+
+export default ProductSlot;

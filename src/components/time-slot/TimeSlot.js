@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
-import FoodAvailability from "../../json/food_availability.json";
 import ModifiedFoodAvailability from "../../json/modified_food_availability.json";
 import "../../lib/css/allspark.min.css";
 import { SCButton, SCTimepicker } from "../../lib/index.cjs";
 import DaySlot from "./DaySlot";
+import Empty from "../../json/empty.json"
 
 function TimeSlot() {
-  const foodAvailability = FoodAvailability.food_availability;
   const colors = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
   const modified = ModifiedFoodAvailability.sections;
+  // const modified = Empty
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  // const tempFoodSlot = {};
   const tempFoodSlot2 = {};
 
   modified.forEach((m, index) => {
     const temp = Object.values(m.available_times);
     temp.forEach((t) => {
-      t.slots.forEach(s=>{
-        s.color = colors[index]
-      })
+      t.slots.forEach((s) => {
+        s.color = colors[index];
+        s.id = m.id;
+      });
     });
   });
 
-  // console.log("modified", modified)
-
   modified.forEach((obj) => {
     const available_times = Object.values(obj.available_times);
-    const id = obj.color;
     for (const [key, value] of Object.entries(available_times)) {
       if (!tempFoodSlot2[key]) {
         tempFoodSlot2[key] = [];
@@ -43,9 +40,9 @@ function TimeSlot() {
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const slot = foodSlotArray[selectedIndex];
-  const timeSlot = Object.values(slot);
+  const timeSlot = Object.values(foodSlotArray[selectedIndex]);
   const [slots, setSlots] = useState(timeSlot);
+  const [buttonSelected, setButtonSelected] = useState([false, false, false]);
 
   useEffect(() => {
     setSlots(timeSlot);
@@ -76,21 +73,83 @@ function TimeSlot() {
     });
   };
 
-
-
   const removeSlot = (index, index2) => {
     const tempSlot = [...timeSlot];
-    tempSlot[index].splice(index2,1)
+    tempSlot[index].splice(index2, 1);
     setSlots(tempSlot);
   };
-  
+
   useEffect(() => {
     let newFoodSlot = { ...foodSlot };
     newFoodSlot[selectedIndex] = { ...slots };
     setFoodSlot(newFoodSlot);
   }, [slots]);
 
-  const tempColor = [];
+  const buttonTitles = ["blue", "green", "yellow"];
+  const [selectedSection, setSelectedSection] = useState(0);
+  const [range, setRange] = useState(0);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(0);
+  const [slot, setSlot] = useState([]);
+
+  const handleColor = (index) => {
+    setSlot(slots[index]);
+    setSelectedSection(index);
+    setButtonSelected(() => {
+      const newState = [...buttonSelected];
+      if (newState[index] === true) {
+        newState[index] = true;
+      } else {
+        newState[index] = !buttonSelected[index];
+      }
+
+      if (newState[index]) {
+        for (let i = 0; i < buttonSelected.length; i++) {
+          if (index !== i) {
+            newState[i] = false;
+          }
+        }
+      }
+      return newState;
+    });
+  };
+
+  const handleStartValue = (value, index) => {
+    setRange(index);
+    setStart(value);
+    const tempSlot = [...slot];
+    tempSlot[index].start_time = value;
+    setSlot(tempSlot);
+    setStart(0);
+  };
+  const handleEndValue = (value, index) => {
+    setRange(index);
+    setEnd(value);
+    const tempSlot = [...slot];
+    tempSlot[index].end_time = value;
+    setSlot(tempSlot);
+    setEnd(0);
+  };
+
+  const addNewHour = (index) => {
+    const temp = {};
+    temp.start_time = start;
+    temp.end_time = end;
+    const newData = [...slots];
+    newData[index].push(temp);
+    setSlot(newData[index]);
+    setSlots(newData);
+  };
+
+  const allFalse = buttonSelected.every((value) => value === false);
+
+  console.log("slot", slot);
+  console.log("slots", slots);
+
+  useEffect(() => {
+    setButtonSelected([false, false, false]);
+    setSlot([])
+  }, [selectedIndex]);
 
   return (
     <div className="p-4">
@@ -114,7 +173,6 @@ function TimeSlot() {
               daySlot={slots}
               selectedIndex={selectedIndex}
               timeSlotIndex={index}
-              tempColor={tempColor}
             />
           );
         })}
@@ -145,19 +203,54 @@ function TimeSlot() {
         </div>
       </div>
 
-      <div className="flex-col mt-6 ml-[45px]">
-        {slots.map((slot, index) => {
-          return slot.map((s,index2) => {
-            return (
-              <div className="w-full flex justify-between" key={index2}>
-                <div className="px-4 py-2 rounded flex-1 ">
-                  <SCTimepicker label="Start Time" value={s.start_time} />
+      <div>
+        <div className="mt-4">
+          {buttonTitles.map((title, index) => {
+            return buttonSelected[index] ? (
+              <SCButton
+                key={index}
+                variant="primary"
+                size="sm"
+                action={(e) => handleColor(index)}
+              >
+                {title}
+              </SCButton>
+            ) : (
+              <SCButton
+                key={index}
+                variant="primary-outline"
+                size="sm"
+                action={(e) => handleColor(index)}
+              >
+                {title}
+              </SCButton>
+            );
+          })}
+        </div>
+        {slot.map((s, index) => {
+          return (
+            <div className="flex-col" key={index}>
+              <div className="w-full flex justify-between">
+                <div className="px-4 py-2 rounded flex-1">
+                  <SCTimepicker
+                    label="Start Time"
+                    value={s.start_time}
+                    handleChange={(value) => {
+                      handleStartValue(value, index);
+                    }}
+                  />
                 </div>
                 <div className="px-4 py-2 rounded flex-1">
-                  <SCTimepicker label="End Time" value={s.end_time} />
+                  <SCTimepicker
+                    label="End Time"
+                    value={s.end_time}
+                    handleChange={(value) => {
+                      handleEndValue(value, index);
+                    }}
+                  />
                 </div>
                 <div
-                  onClick={(e) => removeSlot(index,index2)}
+                  onClick={(e) => removeSlot(selectedSection, index)}
                   className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
                 >
                   <div>Remove Hour</div>
@@ -166,18 +259,20 @@ function TimeSlot() {
                   <div>Custom Hours</div>
                 </div>
               </div>
-            );
-          });
+            </div>
+          );
         })}
-      </div>
-      <div>
-        <SCButton
-          size="lg"
-          variant="primary-outline"
-          className="ml-[60px] mt-4"
-        >
-          <span className="ml-2">Add New Hour</span>
-        </SCButton>
+
+        {allFalse ? null : (
+          <SCButton
+            size="lg"
+            variant="primary-outline"
+            className="ml-[20px] mt-4"
+            action={() => addNewHour(selectedSection)}
+          >
+            <span className="ml-2">Add New Hour</span>
+          </SCButton>
+        )}
       </div>
     </div>
   );

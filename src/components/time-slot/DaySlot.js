@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, foodSlot, timeSlotIndex, tempColor }) {
+function TimeDivision({ day, foodSlot}) {
   const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot);
 
   const sorted = [];
