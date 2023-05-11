@@ -13,7 +13,6 @@
               "start_time": 1600,
               "end_time": 1730
             }
-           
           ]
         },
         "1": {
@@ -47,7 +46,7 @@
             }
           ]
         },
-        "4": {                                                                                                                                                                                        
+        "4": {
           "disabled": false,
           "slots": [
             {
@@ -378,7 +377,7 @@
       ]
     },
     {
-      "id": 2944,
+      "id": 2940,
       "title": "Wingstreet",
       "start_time": 901,
       "end_time": 2159,
@@ -405,7 +404,7 @@
           "disabled": false,
           "slots": [
             {
-              "start_time":900,
+              "start_time": 900,
               "end_time": 1100
             },
             {
@@ -419,7 +418,7 @@
           "slots": [
             {
               "start_time": 30,
-              "end_time":  130
+              "end_time": 130
             }
           ]
         },
@@ -758,12 +757,12 @@
       "title": "Wingstreet",
       "start_time": 901,
       "end_time": 2159,
-      "available_times":{
+      "available_times": {
         "0": {
           "disabled": false,
           "slots": [
             {
-              "start_time":30,
+              "start_time": 30,
               "end_time": 130
             }
           ]
@@ -821,7 +820,7 @@
               "end_time": 2100
             },
             {
-              "start_time":30,
+              "start_time": 30,
               "end_time": 130
             }
           ]

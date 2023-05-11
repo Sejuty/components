@@ -8,11 +8,13 @@ import Empty from "../../json/empty.json";
 function TimeSlot() {
   const colors = ["#79c5f5", "#95f7b3", "#f4f57a"];
 
-  const modified = ModifiedFoodAvailability.sections;
+  const modified = Empty.sections;
   const id = [];
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempFoodSlot2 = {};
+
+
 
   modified.forEach((m, index) => {
     const temp = Object.values(m.available_times);
@@ -24,6 +26,10 @@ function TimeSlot() {
       });
     });
   });
+
+  id.sort()
+  
+
 
   modified.forEach((obj) => {
     const available_times = Object.values(obj.available_times);
@@ -93,6 +99,24 @@ function TimeSlot() {
   const [slot, setSlot] = useState([]);
   const [pid, setPid] = useState(null);
 
+  function groupById(slots) {
+    const idKey = slots.reduce((acc, cur) => {
+      cur.forEach((item) => {
+        if (acc[item.id]) {
+          acc[item.id].push(item);
+        } else {
+          acc[item.id] = [item];
+        }
+      });
+      return acc;
+    }, {});
+    return idKey;
+  }
+
+  const idKey = groupById(slots);
+
+
+
   const handleColor = (e, index) => {
     setPid(e.target.textContent);
     setSlot(slots[index]);
@@ -131,38 +155,59 @@ function TimeSlot() {
     setEnd(0);
   };
 
-  const addNewHour = (index) => {
- 
+  function createArrayWithKey(obj, key) {
     const temp = {};
     temp.start_time = start;
     temp.end_time = end;
-    const newData = [...slots];
-    newData[index].push(temp);
+    temp.id=key
+    if (!(key in obj)) {
+      obj[key] = [];
+      obj[key].push(temp);
+    }
+    return obj;
+  }
+
+  function keyExists(obj, key) {
+    return(key in obj);
+  }
+  
+  const addNewHour = (index) => {
+    const temp = {};
+    temp.start_time = start;
+    temp.end_time = end;
+    temp.id = parseInt(pid)
+    //grouping by ID
+    let tempObj = groupById(slots);
+    const exists = keyExists(tempObj,pid)
+    //if doesn't exist create new corresponding object
+    if(!exists){
+       tempObj = createArrayWithKey(tempObj, pid);
+    }else{
+      tempObj[pid].push(temp);
+    }
+    console.log(tempObj)
+
+
+    // if (tempObj2[pid]) {
+    //   tempObj2[pid].push(temp);
+    // } else {
+    //   tempObj2[pid] = [pid];
+    // }
+    
+    const a = Object.values(tempObj);
+    const newData = [...a]
+    console.log(newData)
+    // newData[index].push(temp);
     setSlot(newData[index]);
     setSlots(newData);
   };
 
   const allFalse = buttonSelected.every((value) => value === false);
 
-  const idKey = slots.reduce((acc, cur) => {
-    cur.forEach((item) => {
-      if (acc[item.id]) {
-        acc[item.id].push(item);
-      } else {
-        acc[item.id] = [item];
-      }
-    });
-    return acc;
-  }, {});
-
-  console.log(idKey);
-
   useEffect(() => {
     setButtonSelected(sectionButton);
     setSlot([]);
   }, [selectedIndex]);
-
-  console.log(buttonSelected)
 
   return (
     <div className="p-4">
