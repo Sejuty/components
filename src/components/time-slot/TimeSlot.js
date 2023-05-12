@@ -6,25 +6,29 @@ import DaySlot from "./DaySlot";
 import Empty from "../../json/empty.json";
 
 function TimeSlot() {
-  const colors = ["#79c5f5", "#95f7b3", "#f4f57a"];
+  const colors = [
+"#C3B1E1","#FDFD96","#A7C7E7","#F8C8DC","#FAC898","#77DD77"
+  ];
 
-  const modified = Empty.sections;
+  const modified_food_availability = Empty.sections;
   const id = [];
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const tempFoodSlot2 = {};
+  const tempSectionSlot = {};
 
-  modified.forEach((m, index) => {
-    const temp = Object.values(m.available_times);
-    id.push(m.id);
-    temp.forEach((t) => {
-      t.slots.forEach((s) => {
+  modified_food_availability.forEach((items, index) => {
+    const temp = Object.values(items.available_times);
+    id.push(items.id);
+    temp.forEach((item) => {
+      item.slots.forEach((s) => {
         s.color = colors[index];
-        s.id = m.id;
+        s.id = items.id;
       });
     });
   });
-const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
+
+  const emptyObj = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] };
+
   const idToColorMap = id.reduce((map, currentId, index) => {
     map[currentId] = colors[index];
     return map;
@@ -32,49 +36,51 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
 
   id.sort();
 
-  modified.forEach((obj) => {
+  modified_food_availability.forEach((obj) => {
     const available_times = Object.values(obj.available_times);
     for (const [key, value] of Object.entries(available_times)) {
-      if (!tempFoodSlot2[key]) {
-        tempFoodSlot2[key] = [];
+      if (!tempSectionSlot[key]) {
+        tempSectionSlot[key] = [];
       }
-      tempFoodSlot2[key].push(value.slots);
+      tempSectionSlot[key].push(value.slots);
     }
   });
 
- 
-  const [foodSlot, setFoodSlot] = useState(tempFoodSlot2===null ? emptyObj : emptyObj);
-  let foodSlotArray = Object.values(foodSlot);
+  const [allSectionSlots, setSectionSlot] = useState(
+    Object.keys(tempSectionSlot).length === 0 ? emptyObj : tempSectionSlot
+  );
+  let sectionSlotsArray = Object.values(allSectionSlots);
   const selectedButton = 7;
-  const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
-  const [singleSelected, setSingleSelected] = useState(checked);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const timeSlot = Object.values(foodSlotArray?.[selectedIndex]|| {});
+  const checkedDay = [...new Array(selectedButton)].map(
+    (_, idx) => idx === false
+  );
+  const [dayButtons, setDayButtons] = useState(checkedDay);
+  const [selectedDay, setSelectedDay] = useState(0);
+  const timeSlot = Object.values(sectionSlotsArray?.[selectedDay] || {});
   const [slots, setSlots] = useState(timeSlot);
-  const sectionButton = [...new Array(3)].map((_, idx) => idx === false);
-  const [buttonSelected, setButtonSelected] = useState(sectionButton);
+  const totalSections = [...new Array(modified_food_availability.length)].map(
+    (_, idx) => idx === false
+  );
+  const [sectionIdButtons, setSectionIdButtons] = useState(totalSections);
 
   useEffect(() => {
     setSlots(timeSlot);
-  }, [selectedIndex]);
-
-
-
+  }, [selectedDay]);
 
   useEffect(() => {
-    setSingleSelected([...checked]);
-    setSingleSelected(() => {
-      const newState = { ...singleSelected };
+    setDayButtons([...checkedDay]);
+    setDayButtons(() => {
+      const newState = { ...dayButtons };
       newState[0] = true;
       return newState;
     });
   }, [selectedButton]);
 
   const toggleCheck = (index) => {
-    setSelectedIndex(index);
-    setSingleSelected(() => {
-      const newState = { ...singleSelected };
-      newState[index] = !singleSelected[index];
+    setSelectedDay(index);
+    setDayButtons(() => {
+      const newState = { ...dayButtons };
+      newState[index] = !dayButtons[index];
       if (newState[index]) {
         for (let i = 0; i < selectedButton; i++) {
           if (index !== i) {
@@ -87,19 +93,19 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
   };
 
   useEffect(() => {
-    let newFoodSlot = { ...foodSlot };
-    newFoodSlot[selectedIndex] = [...slots];
-    setFoodSlot(newFoodSlot);
+    let newFoodSlot = { ...allSectionSlots };
+    newFoodSlot[selectedDay] = [...slots];
+    setSectionSlot(newFoodSlot);
   }, [slots]);
 
   const [selectedSection, setSelectedSection] = useState(0);
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(0);
   const [slot, setSlot] = useState([]);
-  const [pid, setPid] = useState(null);
+  const [sectionId, setSectionId] = useState(null);
 
   function groupById(slots) {
-    const idKey = slots.reduce((acc, cur) => {
+    const groupedSlotsById = slots.reduce((acc, cur) => {
       cur.forEach((item) => {
         if (acc[item.id]) {
           acc[item.id].push(item);
@@ -109,38 +115,38 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
       });
       return acc;
     }, {});
-    return idKey;
+    return groupedSlotsById;
   }
 
   const groupBy = groupById(slots);
 
-  const [idKey, setIdKey] = useState(groupBy);
+  const [groupedSlotsById, setGroupedSlotsById] = useState(groupBy);
 
   useEffect(() => {
-    setIdKey(groupBy);
+    setGroupedSlotsById(groupBy);
   }, [slots]);
 
   const removeSlot = (key, index) => {
-    const tempObj = { ...idKey };
+    const tempObj = { ...groupedSlotsById };
     tempObj[key].splice(index, 1);
-    setIdKey(tempObj);
+    setGroupedSlotsById(tempObj);
     setSlots(Object.values(tempObj));
   };
 
   const handleColor = (e, index) => {
     const tempKey = e.target.textContent;
-    setPid(tempKey);
-    setSlot(idKey[tempKey]);
+    setSectionId(tempKey);
+    setSlot(groupedSlotsById[tempKey]);
     setSelectedSection(index);
-    setButtonSelected(() => {
-      const newState = [...buttonSelected];
+    setSectionIdButtons(() => {
+      const newState = [...sectionIdButtons];
       if (newState[index] === true) {
         newState[index] = true;
       } else {
-        newState[index] = !buttonSelected[index];
+        newState[index] = !sectionIdButtons[index];
       }
       if (newState[index]) {
-        for (let i = 0; i < buttonSelected.length; i++) {
+        for (let i = 0; i < sectionIdButtons.length; i++) {
           if (index !== i) {
             newState[i] = false;
           }
@@ -186,32 +192,27 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
     const temp = {};
     temp.start_time = start;
     temp.end_time = end;
-    temp.id = parseInt(pid);
-    temp.color = idToColorMap[pid];
-    //grouping by ID
+    temp.id = parseInt(sectionId);
+    temp.color = idToColorMap[sectionId];
     let tempObj = groupById(slots);
-    const exists = keyExists(tempObj, pid);
-    //if doesn't exist create new corresponding object
-    if (!exists) {
-      tempObj = createArrayWithKey(tempObj, pid);
+    const isExistingKey  = keyExists(tempObj, sectionId);
+    if (!isExistingKey ) {
+      tempObj = createArrayWithKey(tempObj, sectionId);
     } else {
-      tempObj[pid].push(temp);
+      tempObj[sectionId].push(temp);
     }
-    const a = Object.values(tempObj);
-    setSlot(tempObj[pid]);
-  
-    setIdKey(tempObj);
-    setSlots(a);
+    const newSlots = Object.values(tempObj);
+    setSlot(tempObj[sectionId]);
+    setGroupedSlotsById(tempObj);
+    setSlots(newSlots);
   };
 
-
-
-  const allFalse = buttonSelected.every((value) => value === false);
+  const allFalse = sectionIdButtons.every((value) => value === false);
 
   useEffect(() => {
-    setButtonSelected(sectionButton);
+    setSectionIdButtons(totalSections);
     setSlot([]);
-  }, [selectedIndex]);
+  }, [selectedDay]);
 
   return (
     <div className="p-4">
@@ -226,16 +227,14 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
           <div className="text-xl">24:00</div>
         </div>
 
-        {foodSlotArray.map((_, index) => {
-          const x = foodSlotArray[index];
-
+        {sectionSlotsArray.map((_, index) => {
           return (
             <DaySlot
               key={index}
               day={daysOfWeek[index]}
-              foodSlot={x}
+              sectionSlots={sectionSlotsArray[index]}
               daySlot={slots}
-              selectedIndex={selectedIndex}
+              selectedDay={selectedDay}
               timeSlotIndex={index}
             />
           );
@@ -243,8 +242,8 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
       </div>
       <div className="flex mt-6 ml-[65px]">
         <div className="w-full flex justify-between">
-          {checked.map((_, index) => {
-            return singleSelected[index] ? (
+          {checkedDay.map((_, index) => {
+            return dayButtons[index] ? (
               <SCButton
                 key={index}
                 action={(e) => toggleCheck(index)}
@@ -269,8 +268,8 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
 
       <div>
         <div className="mt-4">
-          {buttonSelected.map((_, index) => {
-            return buttonSelected[index] ? (
+          {sectionIdButtons.map((_, index) => {
+            return sectionIdButtons[index] ? (
               <SCButton
                 key={index}
                 variant="primary"
@@ -291,9 +290,9 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
             );
           })}
         </div>
-        {pid && !allFalse && (
+        {sectionId && !allFalse && (
           <div>
-            {idKey[pid]?.map((s, index) => (
+            {groupedSlotsById[sectionId]?.map((s, index) => (
               <div className="flex-col" key={index}>
                 <div className="w-full flex justify-between">
                   <div className="px-4 py-2 rounded flex-1">
@@ -315,7 +314,7 @@ const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
                     />
                   </div>
                   <div
-                    onClick={(e) => removeSlot(pid, index)}
+                    onClick={(e) => removeSlot(sectionId, index)}
                     className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
                   >
                     <div>Remove Hour</div>

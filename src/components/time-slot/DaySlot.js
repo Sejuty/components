@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, foodSlot }) {
+function TimeDivision({ day, sectionSlots }) {
   const sorted = [];
-  for (let i = 0; i < foodSlot.length; i++) {
-    for (let j = 0; j < foodSlot[i].length; j++) {
-      sorted.push(foodSlot[i][j]);
+  for (let i = 0; i < sectionSlots.length; i++) {
+    for (let j = 0; j < sectionSlots[i].length; j++) {
+      sorted.push(sectionSlots[i][j]);
     }
   }
 
