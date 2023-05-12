@@ -14,8 +14,6 @@ function TimeSlot() {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempFoodSlot2 = {};
 
-
-
   modified.forEach((m, index) => {
     const temp = Object.values(m.available_times);
     id.push(m.id);
@@ -26,10 +24,13 @@ function TimeSlot() {
       });
     });
   });
+const emptyObj = {"0": [], "1": [], "2": [], "3": [], "4": [], "5": [], "6": []}
+  const idToColorMap = id.reduce((map, currentId, index) => {
+    map[currentId] = colors[index];
+    return map;
+  }, {});
 
-  id.sort()
-  
-
+  id.sort();
 
   modified.forEach((obj) => {
     const available_times = Object.values(obj.available_times);
@@ -41,13 +42,14 @@ function TimeSlot() {
     }
   });
 
-  const [foodSlot, setFoodSlot] = useState(tempFoodSlot2);
-  const foodSlotArray = Object.values(foodSlot);
+ 
+  const [foodSlot, setFoodSlot] = useState(tempFoodSlot2===null ? emptyObj : emptyObj);
+  let foodSlotArray = Object.values(foodSlot);
   const selectedButton = 7;
   const checked = [...new Array(selectedButton)].map((_, idx) => idx === false);
   const [singleSelected, setSingleSelected] = useState(checked);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const timeSlot = Object.values(foodSlotArray[selectedIndex]);
+  const timeSlot = Object.values(foodSlotArray?.[selectedIndex]|| {});
   const [slots, setSlots] = useState(timeSlot);
   const sectionButton = [...new Array(3)].map((_, idx) => idx === false);
   const [buttonSelected, setButtonSelected] = useState(sectionButton);
@@ -55,6 +57,9 @@ function TimeSlot() {
   useEffect(() => {
     setSlots(timeSlot);
   }, [selectedIndex]);
+
+
+
 
   useEffect(() => {
     setSingleSelected([...checked]);
@@ -81,15 +86,9 @@ function TimeSlot() {
     });
   };
 
-  const removeSlot = (index, index2) => {
-    const tempSlot = [...timeSlot];
-    tempSlot[index]?.splice(index2, 1);
-    setSlots(tempSlot);
-  };
-
   useEffect(() => {
     let newFoodSlot = { ...foodSlot };
-    newFoodSlot[selectedIndex] = { ...slots };
+    newFoodSlot[selectedIndex] = [...slots];
     setFoodSlot(newFoodSlot);
   }, [slots]);
 
@@ -113,13 +112,25 @@ function TimeSlot() {
     return idKey;
   }
 
-  const idKey = groupById(slots);
+  const groupBy = groupById(slots);
 
+  const [idKey, setIdKey] = useState(groupBy);
 
+  useEffect(() => {
+    setIdKey(groupBy);
+  }, [slots]);
+
+  const removeSlot = (key, index) => {
+    const tempObj = { ...idKey };
+    tempObj[key].splice(index, 1);
+    setIdKey(tempObj);
+    setSlots(Object.values(tempObj));
+  };
 
   const handleColor = (e, index) => {
-    setPid(e.target.textContent);
-    setSlot(slots[index]);
+    const tempKey = e.target.textContent;
+    setPid(tempKey);
+    setSlot(idKey[tempKey]);
     setSelectedSection(index);
     setButtonSelected(() => {
       const newState = [...buttonSelected];
@@ -128,7 +139,6 @@ function TimeSlot() {
       } else {
         newState[index] = !buttonSelected[index];
       }
-
       if (newState[index]) {
         for (let i = 0; i < buttonSelected.length; i++) {
           if (index !== i) {
@@ -159,7 +169,8 @@ function TimeSlot() {
     const temp = {};
     temp.start_time = start;
     temp.end_time = end;
-    temp.id=key
+    temp.color = idToColorMap[key];
+    temp.id = parseInt(key);
     if (!(key in obj)) {
       obj[key] = [];
       obj[key].push(temp);
@@ -168,39 +179,32 @@ function TimeSlot() {
   }
 
   function keyExists(obj, key) {
-    return(key in obj);
+    return key in obj;
   }
-  
+
   const addNewHour = (index) => {
     const temp = {};
     temp.start_time = start;
     temp.end_time = end;
-    temp.id = parseInt(pid)
+    temp.id = parseInt(pid);
+    temp.color = idToColorMap[pid];
     //grouping by ID
     let tempObj = groupById(slots);
-    const exists = keyExists(tempObj,pid)
+    const exists = keyExists(tempObj, pid);
     //if doesn't exist create new corresponding object
-    if(!exists){
-       tempObj = createArrayWithKey(tempObj, pid);
-    }else{
+    if (!exists) {
+      tempObj = createArrayWithKey(tempObj, pid);
+    } else {
       tempObj[pid].push(temp);
     }
-    console.log(tempObj)
-
-
-    // if (tempObj2[pid]) {
-    //   tempObj2[pid].push(temp);
-    // } else {
-    //   tempObj2[pid] = [pid];
-    // }
-    
     const a = Object.values(tempObj);
-    const newData = [...a]
-    console.log(newData)
-    // newData[index].push(temp);
-    setSlot(newData[index]);
-    setSlots(newData);
+    setSlot(tempObj[pid]);
+  
+    setIdKey(tempObj);
+    setSlots(a);
   };
+
+
 
   const allFalse = buttonSelected.every((value) => value === false);
 
@@ -223,11 +227,13 @@ function TimeSlot() {
         </div>
 
         {foodSlotArray.map((_, index) => {
+          const x = foodSlotArray[index];
+
           return (
             <DaySlot
               key={index}
               day={daysOfWeek[index]}
-              foodSlot={foodSlotArray[index]}
+              foodSlot={x}
               daySlot={slots}
               selectedIndex={selectedIndex}
               timeSlotIndex={index}
@@ -309,7 +315,7 @@ function TimeSlot() {
                     />
                   </div>
                   <div
-                    onClick={(e) => removeSlot(selectedSection, index)}
+                    onClick={(e) => removeSlot(pid, index)}
                     className="cursor-pointer px-4 py-2 rounded flex-1 text-center mt-7 text-purple-500 font-medium"
                   >
                     <div>Remove Hour</div>

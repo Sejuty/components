@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import HourSlots from "./Slots";
 
 function TimeDivision({ day, foodSlot }) {
-  const [dayFoodSlot, setDayFoodSlot] = useState(foodSlot);
-
   const sorted = [];
-  for (let i = 0; i < dayFoodSlot.length; i++) {
-    for (let j = 0; j < dayFoodSlot[i].length; j++) {
-      sorted.push(dayFoodSlot[i][j]);
+  for (let i = 0; i < foodSlot.length; i++) {
+    for (let j = 0; j < foodSlot[i].length; j++) {
+      sorted.push(foodSlot[i][j]);
     }
   }
 
@@ -16,7 +14,7 @@ function TimeDivision({ day, foodSlot }) {
   });
 
   const divs = Array.from({ length: 24 }, (_, hour) => {
-   return slots.length ? (
+    return slots.length ? (
       <div
         key={hour}
         className="w-1/6 h-10 bg-blue-100 border border-white relative "
@@ -35,21 +33,21 @@ function TimeDivision({ day, foodSlot }) {
       </div>
     ) : (
       <div
-      key={hour}
-      className="w-1/6 h-10 bg-gray-200 border border-white relative "
-    >
-      {slots.map((slot, index) => {
-        return (
-          <HourSlots
-            key={index}
-            hour={hour}
-            start_time={slot.start_time}
-            end_time={slot.end_time}
-            color={slot.color}
-          />
-        );
-      })}
-    </div>
+        key={hour}
+        className="w-1/6 h-10 bg-gray-200 border border-white relative "
+      >
+        {slots.map((slot, index) => {
+          return (
+            <HourSlots
+              key={index}
+              hour={hour}
+              start_time={slot.start_time}
+              end_time={slot.end_time}
+              color={slot.color}
+            />
+          );
+        })}
+      </div>
     );
   });
   return (
