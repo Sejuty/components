@@ -6,29 +6,21 @@ const SelectionPlaceholder = ({
   imgHeight,
   imgWidth,
   label,
-  position,
+  top,
   children,
 }) => {
-  const isTitleOnTop = position === "top";
   const style = {
     height: `${imgHeight}`,
-    width : `${imgWidth}`
+    width: `${imgWidth}`,
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-fit m-2">
-      {isTitleOnTop && (
+    <div className="flex flex-col items-center justify-center w-fit m-2 gap-y-4">
+      <div className={`flex  items-center justify-center ${top ? "flex-col-reverse" : "flex-col"}`}>
+        <img src={imgSrc} alt={label} style={style} />
         <h2 className="font-medium text-[14px] text-black">{label}</h2>
-      )}
-      <img src={imgSrc} alt={label} style={style}/>
-      {!isTitleOnTop && (
-        <h2 className="text-[14px] font-medium text-black">{label}</h2>
-      )}
-      {children && (
-        <div className="my-4">
-          {children}
-        </div>
-      )}
+      </div>
+      {children}
     </div>
   );
 };
@@ -38,7 +30,7 @@ SelectionPlaceholder.propTypes = {
   imgHeight: PropTypes.string,
   imgWidth: PropTypes.string,
   label: PropTypes.string.isRequired,
-  position: PropTypes.oneOf(["top", "bottom"]),
+  position: PropTypes.bool,
   children: PropTypes.element,
 };
 
@@ -46,8 +38,8 @@ SelectionPlaceholder.defaultProps = {
   imgHeight: "144px",
   imgWidth: "144px",
   label: "",
-  imgSrc:"",
-  position: "bottom",
+  imgSrc: "",
+  top: false,
   children: null,
 };
 
