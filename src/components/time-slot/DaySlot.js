@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import HourSlots from "./Slots";
 
-function TimeDivision({ day, sectionSlots }) {
+function DaySlot({ day, sectionSlots }) {
   const sorted = [];
   for (let i = 0; i < sectionSlots.length; i++) {
     for (let j = 0; j < sectionSlots[i].length; j++) {
@@ -60,4 +60,4 @@ function TimeDivision({ day, sectionSlots }) {
   );
 }
 
-export default TimeDivision;
+export default DaySlot;

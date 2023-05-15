@@ -7,14 +7,18 @@ import Empty from "../../json/empty.json";
 
 function TimeSlot() {
   const colors = [
-"#C3B1E1","#FDFD96","#A7C7E7","#F8C8DC","#FAC898","#77DD77"
+    "#C3B1E1",
+    "#FDFD96",
+    "#A7C7E7",
+    "#F8C8DC",
+    "#FAC898",
+    "#77DD77",
   ];
-
   const modified_food_availability = Empty.sections;
-  const id = [];
-
+  const emptyObj = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] };
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempSectionSlot = {};
+  const id = [];
 
   modified_food_availability.forEach((items, index) => {
     const temp = Object.values(items.available_times);
@@ -26,8 +30,6 @@ function TimeSlot() {
       });
     });
   });
-
-  const emptyObj = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] };
 
   const idToColorMap = id.reduce((map, currentId, index) => {
     map[currentId] = colors[index];
@@ -195,8 +197,8 @@ function TimeSlot() {
     temp.id = parseInt(sectionId);
     temp.color = idToColorMap[sectionId];
     let tempObj = groupById(slots);
-    const isExistingKey  = keyExists(tempObj, sectionId);
-    if (!isExistingKey ) {
+    const isExistingKey = keyExists(tempObj, sectionId);
+    if (!isExistingKey) {
       tempObj = createArrayWithKey(tempObj, sectionId);
     } else {
       tempObj[sectionId].push(temp);
@@ -207,7 +209,9 @@ function TimeSlot() {
     setSlots(newSlots);
   };
 
-  const allFalse = sectionIdButtons.every((value) => value === false);
+  const isAllSectionSelected = sectionIdButtons.every(
+    (value) => value === false
+  );
 
   useEffect(() => {
     setSectionIdButtons(totalSections);
@@ -290,7 +294,7 @@ function TimeSlot() {
             );
           })}
         </div>
-        {sectionId && !allFalse && (
+        {sectionId && !isAllSectionSelected && (
           <div>
             {groupedSlotsById[sectionId]?.map((s, index) => (
               <div className="flex-col" key={index}>
@@ -328,7 +332,7 @@ function TimeSlot() {
           </div>
         )}
 
-        {allFalse ? null : (
+        {isAllSectionSelected ? null : (
           <SCButton
             size="lg"
             variant="primary-outline"
