@@ -1,5 +1,5 @@
 import React from "react";
-import HourSlots from "./Slots";
+import HourSlots from "./Slot";
 
 function DaySlot({ day, sectionSlots }) {
   const sorted = [];
