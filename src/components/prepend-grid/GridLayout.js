@@ -1,13 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import Grid from "../components/Grid";
-import "./style.css";
+import Grid from "./Grid";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const GridLayout = () => {
-  const initialGrid = [{ name: "one" }, { name: "two" }, { name: "three" }];
+
   const [grid, setGrid] = useState([]);
-  const [dragging, setDragging] = useState(false);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const gridRef = useRef(null);
   const checkArrayLength = grid.length;
   const dropdown = [...new Array(checkArrayLength)].map(
@@ -51,10 +48,7 @@ const GridLayout = () => {
         {checkArrayLength === 0 ? null : checkArrayLength === 8 ? (
           <div
             ref={gridRef}
-            className=" scroll-smooth pl-4 pr-4 bg-gray-300 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[368px]"
-            onScroll={(e)=>{
-          
-            }}
+            className="scroll-smooth pl-4 pr-4 bg-gray-300 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[368px]"
           >
             <Grid
               grid={grid}
@@ -64,17 +58,12 @@ const GridLayout = () => {
               dropdown={dropdown}
               handleMouseLeave={handleMouseLeave}
               gridRef={gridRef}
-              scrollLeft={scrollLeft}
             />
-            
           </div>
         ) : (
           <div
             ref={gridRef}
-            className="scroll-smooth container pl-4 bg-gray-300 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[264px]"
-            onScroll={(e)=>{
-              setScrollLeft(gridRef.current.scrollLeft)
-            }}
+            className="scroll-smooth pl-4 bg-gray-300 cursor-pointer flex overflow-x-scroll space-x-4 my-4 w-fit max-w-[352px]"
           >
             <Grid
               grid={grid}
@@ -84,10 +73,12 @@ const GridLayout = () => {
               dropdown={dropdown}
               handleMouseLeave={handleMouseLeave}
               gridRef={gridRef}
-              scrollLeft={scrollLeft}
+            
             />
           </div>
         )}
+
+
         {checkArrayLength < 8 ? (
           <div className="bg-gray-300 h-[104px] w-[104px] flex justify-center items-center rounded-lg">
             <div

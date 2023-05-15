@@ -7,14 +7,14 @@ function Grid({
   handleDropdownToggle,
   isDropdownOpen,
   handleMouseLeave,
-  gridRef,
-  scrollLeft,
 }) {
   const [startX, setStartX] = useState("");
-  const [startY, setStartY] = useState("");
 
-  console.log(typeof startX.toString());
-
+  const dropDownPos = (e, index) => {
+    const pos = e.pageX - 36;
+    setStartX(pos);
+    handleDropdownToggle(index);
+  };
   const gridStyle = {
     left: `${startX}px`,
   };
@@ -29,9 +29,7 @@ function Grid({
           {index}
           <button
             onClick={(e) => {
-              const pos = e.pageX - 36;
-              setStartX(pos);
-              handleDropdownToggle(index);
+              dropDownPos(e, index);
             }}
             className="focus:outline-none hover:bg-gray-100 rounded p-2 transition-colors duration-150 ease-in-out"
           >
