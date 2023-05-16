@@ -1,6 +1,6 @@
 import React from "react";
-import { SCInput, SCSwitch } from "../../lib/index.cjs";
 import "../../lib/css/allspark.min.css";
+import { SCInput } from "../../lib/index.cjs.js";
 
 function ModofierGroups() {
   return (

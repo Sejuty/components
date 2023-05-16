@@ -1,12 +1,9 @@
 import "./App.css";
-import TimeSlot from "../src/components/time-slot/TimeSlot";
-import SelectionPlaceholder from "./components/placeholder/SelectionPlaceholder";
-import Child from "./components/placeholder/Child";
-import GridLayout from "./components/prepend-grid/GridLayout";
-import Menu from "./components/basic_files/Menu";
 import Catagory from "./components/basic_files/Catagory";
 import Item from "./components/basic_files/Item";
-import ModofierGroups from "./components/basic_files/ModofierGroups";
+import Menu from "./components/basic_files/Menu";
+import ModifierGroups from "./components/basic_files/ModifierGroups";
+import Dropdown from "./components/dropdown/Dropdown";
 
 function App() {
   return (
@@ -24,10 +21,11 @@ function App() {
         imgHeight="120px"
         imgWidth="180px"
       /> */}
-      <Menu/>
+      {/* <Menu/>
       <Catagory/>
       <Item/>
-      <ModofierGroups/>
+      <ModifierGroups/> */}
+      <Dropdown children={<button className="text-purple-400"> hello</button>} isOpen={false} />
     </div>
   );
 }
