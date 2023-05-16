@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const Dropdown = ({ children, isOpen }) => {
   const [open, setOpen] = useState(isOpen);
 
-  const toggleDropdown = () => {
-    setOpen(!open);
-  };
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
+
+  const dropdownVisibility = `absolute mt-1 p-2 right-0 w-[120px] bg-white @apply shadow-[0px_1px_2px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] rounded-[4px]
+  ${
+    open ? "visible" : "hidden"
+  } `;
 
   return (
-    <div
-      className="relative ml-[120px] w-fit cursor-pointer"
-      onClick={toggleDropdown}
-    >
+    <div className="relative ml-[120px] w-fit cursor-pointer">
       <svg
         width="16"
         height="16"
@@ -42,12 +44,10 @@ const Dropdown = ({ children, isOpen }) => {
           stroke-linejoin="round"
         />
       </svg>
-
-      {open && (
-        <div className="absolute mt-1 p-2 right-0 w-[120px] bg-white @apply shadow-[0px_1px_2px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] rounded-[4px]">
-          {children}
-        </div>
-      )}
+      
+      <div className={dropdownVisibility}>
+        {children}
+      </div>
     </div>
   );
 };
