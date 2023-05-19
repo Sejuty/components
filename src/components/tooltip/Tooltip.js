@@ -1,69 +1,102 @@
-import React, { useRef, useEffect } from "react";
-
-function Tooltip({ message, children, position }) {
+import React, { useRef, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+function Tooltip({ message, children, position, caret }) {
   const childrenRef = useRef(null);
+
+  const [childrenWidth, setChildrenWidth] = useState(0);
+  const [childrenHeight, setChildrenHeight] = useState(0);
 
   useEffect(() => {
     if (childrenRef.current) {
       const width = childrenRef.current.offsetWidth;
       const height = childrenRef.current.offsetHeight;
-      console.log("Width of children:", width);
-      console.log("Height of children:", height);
-      //   console.log(childrenRef)
+      setChildrenHeight(height);
+      setChildrenWidth(width);
     }
   }, []);
+
+  const leftStyle = { right: `${childrenWidth}px` };
+  const rightSttyle = { left: `${childrenWidth}px` };
+  const topStyle = { bottom: `${childrenHeight}px` };
+  const bottomStyle = { top: `${childrenHeight}px` };
+
+  const caretVisibility = caret ? "" : "hidden";
+
+  const selectedStyle =
+    position === "left"
+      ? leftStyle
+      : position === "right"
+      ? rightSttyle
+      : position === "top" ||
+        position === "top-left" ||
+        position === "top-right"
+      ? topStyle
+      : position === "bottom" ||
+        position === "bottom-left" ||
+        position === "bottom-right"
+      ? bottomStyle
+      : "";
 
   const tooltipOuterClass = `relative flex ${
     position === "left"
       ? ""
       : position === "right"
       ? ""
-      : position === "top"
+      : position === "top" ||
+        position === "top-left" ||
+        position === "top-right"
       ? "flex-col"
-      : position === "bottom"
+      : position === "bottom" ||
+        position === "bottom-left" ||
+        position === "bottom-right"
       ? "flex-col"
       : ""
   } items-center group`;
 
   const tooltipBoxOuterClass = `absolute ${
-    position === "top"
-      ? "bottom-0 mb-6 flex-col"
-      : position === "bottom"
-      ? "top-0 mt-6 flex-col-reverse"
+    position === "top" || position === "top-left" || position === "top-right"
+      ? ` mb-1 flex-col`
+      : position === "bottom" ||
+        position === "bottom-left" ||
+        position === "bottom-right"
+      ? ` mt-1 flex-col-reverse`
       : position === "left"
-      ? "right-0 flex mr-10"
+      ? `flex mr-1`
       : position === "right"
-      ? "left-0 flex-row-reverse ml-10"
+      ? `flex-row-reverse ml-1`
       : ""
   } items-center hidden group-hover:flex`;
 
   const tooltipBoxClass = `relative ${
-    position === "left" || "right" ? "flex-1" : ""
-  } z-10 p-2 text-lg text-white bg-black shadow-lg`;
+    position === "left" || position === "right"
+      ? "flex-1"
+      : position === "top-left" || position === "bottom-left"
+      ? "right-[30px]"
+      : position === "top-right" || position === "bottom-right"
+      ? "left-[30px]"
+      : ""
+  } z-10 px-3 py-2 text-[12px] text-white bg-blue-700 w-[109px] shadow-lg rounded-[8px]`;
 
-  const tooltipArrowPositionClass = `w-3 h-3 ${
-    position === "top"
+  const tooltipArrowPositionClass = `w-[12px] h-[12px] rounded-[1px] ${
+    position === "top" || position === "top-left" || position === "top-right"
       ? "-mt-2"
-      : position === "bottom"
+      : position === "bottom" ||
+        position === "bottom-left" ||
+        position === "bottom-right"
       ? "-mb-2"
       : position === "left"
-      ? "-ml-[7.3px]"
+      ? "-ml-2"
       : position === "right"
-      ? "-mr-[8px]"
+      ? "-mr-2"
       : ""
-  } rotate-45 bg-black`;
+  } rotate-45 bg-blue-700 ${caretVisibility}`;
 
-  console.log("tooltipOuterClass", tooltipOuterClass);
-  console.log("tooltipBoxClass", tooltipBoxClass);
-  console.log(tooltipArrowPositionClass);
-  console.log(tooltipBoxOuterClass);
   return (
     <div>
-      {/* top */}
       <div className="flex items-center justify-center w-screen h-screen">
         <div className={tooltipOuterClass}>
           <div ref={childrenRef}>{children}</div>
-          <div className={tooltipBoxOuterClass}>
+          <div className={tooltipBoxOuterClass} style={selectedStyle}>
             <span className={tooltipBoxClass}>{message}</span>
             <div className={tooltipArrowPositionClass}></div>
           </div>
@@ -72,5 +105,19 @@ function Tooltip({ message, children, position }) {
     </div>
   );
 }
+
+Tooltip.propTypes = {
+  position :PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+  message: PropTypes.string.isRequired,
+  caret: PropTypes.bool,
+};
+
+Tooltip.defaultProps = {
+  position : "top",
+  children: null,
+  message: "this is a tooltip",
+  caret: true
+};
 
 export default Tooltip;
