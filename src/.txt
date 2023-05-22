@@ -2837,3 +2837,290 @@ const tooltipPositionClass = `absolute ${
       </div> */}
 
       {/* left */}
+
+
+
+
+
+      import React, { useState } from "react";
+
+const Tooltip = ({ trigger, children }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleToggle = () => {
+    if (trigger === "hover") {
+      setIsVisible(!isVisible);
+    } else if (trigger === "click") {
+      setIsVisible(true);
+    }
+  };
+
+  return (
+    <div className="relative inline-block">
+      <span
+        className="cursor-pointer"
+        onMouseEnter={() => handleToggle()}
+        onMouseLeave={() => handleToggle()}
+        onClick={() => handleToggle()}
+      >
+        {children}
+      </span>
+      {isVisible && (
+        <div className="absolute z-10 bg-blue-700 text-white py-2 px-3 rounded shadow-lg">
+          This is the tooltip content.
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Tooltip;
+
+
+
+
+  const tooltipOuterClass = `relative flex ${
+    position === "left"
+      ? ""
+      : position === "right"
+      ? ""
+      : position === "top" ||
+        position === "top-right" ||
+        position === "top-left"
+      ? "flex-col"
+      : position === "bottom" ||
+        position === "bottom-right" ||
+        position === "bottom-left"
+      ? "flex-col"
+      : ""
+  } items-center`;
+
+
+  
+  const tooltipBoxClass = `relative ${
+    position === "left" || position === "right"
+      ? "flex-1"
+      : position === "top-right" || position === "bottom-right"
+      ? "right-[30px]"
+      : position === "top-left" || position === "bottom-left"
+      ? "left-[30px]"
+      : ""
+  } z-10 px-3 py-2 font-medium ${
+    variant === "primary"
+      ? "bg-[#6A13F4] text-[#FFFFFF]"
+      : variant === "secondary"
+      ? "bg-[#F0E7FE] text-[#6A13F4]"
+      : variant === "tertiary"
+      ? "bg-[#EBEBEB] text-[#000000]"
+      : variant === "success"
+      ? "bg-[#16B050] text-[#FFFFFF]"
+      : variant === "danger"
+      ? "bg-[#F43F5E] text-[#FFFFFF]"
+      : variant === "warning"
+      ? "bg-[#F3C318] text-[#FFFFFF]"
+      : variant === "clear"
+      ?"bg-white text-black"
+      :""
+  } w-[109px] shadow-lg rounded-[8px]`;
+
+
+
+import React, { useRef, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import "./tooltip.css";
+function Tooltip({
+  content,
+  position,
+  caret,
+  trigger,
+  timeout,
+  variant,
+  ...props
+}) {
+  useEffect(() => {
+    if (childrenRef.current) {
+      const width = childrenRef.current.offsetWidth;
+      const height = childrenRef.current.offsetHeight;
+      setChildrenHeight(height);
+      setChildrenWidth(width);
+    }
+  }, []);
+
+  const childrenRef = useRef(null);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [childrenWidth, setChildrenWidth] = useState(0);
+  const [childrenHeight, setChildrenHeight] = useState(0);
+  const caretVisibility = caret ? "" : "hidden";
+  const tooltipVisibility = isTooltipOpen ? "flex" : "hidden";
+
+  const handleMouseEnter = () => {
+    if (trigger === "hover") {
+      setIsTooltipOpen(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (trigger === "hover") {
+      setIsTooltipOpen(false);
+    }
+  };
+
+  const handleClick = () => {
+    if (trigger === "click") {
+      setIsTooltipOpen(!isTooltipOpen);
+    }
+  };
+
+  useEffect(() => {
+    let timer;
+    if (isTooltipOpen && timeout) {
+      timer = setTimeout(() => {
+        setIsTooltipOpen(false);
+      }, timeout);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isTooltipOpen, timeout]);
+
+  const leftStyle = { right: `${childrenWidth}px` };
+  const rightSttyle = { left: `${childrenWidth}px` };
+  const topStyle = { bottom: `${childrenHeight}px` };
+  const bottomStyle = { top: `${childrenHeight}px` };
+
+  const selectedStyle =
+    position === "left"
+      ? leftStyle
+      : position === "right"
+      ? rightSttyle
+      : position === "top" ||
+        position === "top-right" ||
+        position === "top-left"
+      ? topStyle
+      : position === "bottom" ||
+        position === "bottom-right" ||
+        position === "bottom-left"
+      ? bottomStyle
+      : "";
+
+  return (
+    <div>
+      <div className="flex items-center justify-center w-screen h-screen">
+        <div
+          className={`tooltip-outer-class tooltip-outer-class-${position}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
+        >
+          <div ref={childrenRef}>{props.children}</div>
+          <div
+            className={`tooltip-box-outer-class tooltip-box-outer-class-${position} ${tooltipVisibility}`}
+            style={selectedStyle}
+          >
+            <span
+              className={`tooltip-box-class tooltip-box-class-${position} bg-${variant}`}
+            >
+              {content}
+            </span>
+            <div
+              className={`tooltip-arrow-position-class tooltip-arrow-position-class-${position} bg-${variant} ${caretVisibility}`}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+Tooltip.propTypes = {
+  position: PropTypes.string,
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.number,
+  ]).isRequired,
+  caret: PropTypes.bool,
+  trigger: PropTypes.oneOf(["click", "hover"]),
+  timeout: PropTypes.number,
+  variant: PropTypes.oneOf([
+    "primary",
+    "secondary",
+    "tertiary",
+    "success",
+    "danger",
+    "warning",
+    "clear",
+  ]),
+};
+
+Tooltip.defaultProps = {
+  position: "top",
+  content: null,
+  caret: true,
+  trigger: "hover",
+  timeout: 3000,
+  variant: "primary",
+};
+
+export default Tooltip;
+
+// Primary: Background #6A13F4, Color: #FFFFFF
+// Secondary: Background #F0E7FE, Color: #6A13F4
+// Tertiary: Background #EBEBEB, Color: #000000
+// Success: Background #16B050, Color: #000000
+// Danger: Background #F43F5E, Color: #000000
+// Warning: Background #F3C318, Color: #000000
+
+
+
+<div className="flex items-center justify-center w-screen h-screen">
+        <div
+          className={tooltipOuterClass}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={handleClick}
+        >
+          <div ref={childrenRef}>{props.children}</div>
+          <div className={tooltipBoxOuterClass} style={selectedStyle}>
+            <span className={tooltipBoxClass}>{content}</span>
+            <div className={tooltipArrowPositionClass}></div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+import React, { useState } from 'react';
+
+const Tooltip = ({ content, children }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
+  return (
+    <div className="relative">
+      <div
+        className="inline-block"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {children}
+      </div>
+      {showTooltip && (
+        <div className="absolute top-0 left-full ml-2 mt-1 bg-gray-200 p-2 rounded">
+          {content}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Tooltip;

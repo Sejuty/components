@@ -2,3 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities{
+    .font-normal {
+      font-weight: 400;
+      font-family: Arial, sans-serif;
+    }
+  
+    .font-medium {
+      font-weight: 500;
+      font-family: Monospace;
+    }
+  
+    .font-bold {
+      font-weight: 700;
+      font-family: Verdana, sans-serif;
+    }
+
+  }
+
