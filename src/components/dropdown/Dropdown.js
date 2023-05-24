@@ -13,7 +13,6 @@ const Dropdown = ({ isOpen, children, isDisable }) => {
   };
 
   const dropdownClassName = `relative ${isDisable?"pointer-events-none opacity-50 text-gray-300": ""}`
-  console.log(isDisable , dropdownClassName)
 
   const dropdownFirstChildrenClassName = `action-dropdown absolute mt-1 p-1 right-0 bg-white rounded-sm
   ${open ? 'visible' : 'hidden'}`;
