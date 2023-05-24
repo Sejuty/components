@@ -44,16 +44,13 @@ function App() {
         risus arcu, ultrices sed feugiat ut, malesuada non odio. Nam in arcu vel
         orci lobortis ornare nec sed libero.
       </div> */}
-      <Dropdown
-        children={<button className="text-purple-400"> hello</button>}
-        isOpen={false}
-      />
-      <Dropdown isOpen={false}>
+
+      <Dropdown isOpen={false} isDisable={true}>
         <DropdownToggle>
-          <button>click</button>
+          <button className="bg-purple-500 p-3">click</button>
         </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem label="button 1"></DropdownItem>
+          <DropdownItem label="button 1 button button"></DropdownItem>
           <DropdownItem label="button 2"></DropdownItem>
         </DropdownMenu>
       </Dropdown>

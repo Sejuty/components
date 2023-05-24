@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const Dropdown = ({ isOpen, children }) => {
+const Dropdown = ({ isOpen, children, isDisable }) => {
   const [open, setOpen] = useState(isOpen);
 
   const toggleDropdown = e => {
     e.stopPropagation();
+    if(isDisable){
+      setOpen(false)
+    }
     setOpen(!open);
   };
 
-  const dropdownClassName = `action-dropdown absolute mt-1 p-1 right-0 bg-white rounded-sm
+  const dropdownClassName = `relative ${isDisable?"pointer-events-none opacity-50 text-gray-300": ""}`
+  console.log(isDisable , dropdownClassName)
+
+  const dropdownFirstChildrenClassName = `action-dropdown absolute mt-1 p-1 right-0 bg-white rounded-sm
   ${open ? 'visible' : 'hidden'}`;
 
   return (
-    <div className="relative">
+    <div className={dropdownClassName}>
       <div
         role="presentation"
         className="flex items-center justify-between cursor-pointer"
@@ -21,7 +27,7 @@ const Dropdown = ({ isOpen, children }) => {
       >
         {children[0]}
       </div>
-      <div className={dropdownClassName}>{children[1]}</div>
+      <div className={dropdownFirstChildrenClassName}>{children[1]}</div>
     </div>
   );
 };
@@ -29,11 +35,14 @@ const Dropdown = ({ isOpen, children }) => {
 Dropdown.propTypes = {
   isOpen: PropTypes.bool,
   children: PropTypes.array,
+  isDisable : PropTypes.bool
 };
 
 Dropdown.defaultProps = {
   isOpen: false,
   children: null,
+  isDisable : false
 };
 
 export default Dropdown;
+
