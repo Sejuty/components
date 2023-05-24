@@ -8,18 +8,21 @@ function HourSlot({ hour, start_time, end_time , color}) {
     return [hours, minutes];
   }
 
+
+  
   const [start_hours, start_minutes] = timeConversion(start_time);
   const [end_hours, end_minutes] = timeConversion(end_time);
   const trackStartHour = new Array(24).fill(false);
   for (let i = 0; i < start_hours; i++) {
     trackStartHour[i] = true;
   }
-
+  
+  
   const trackEndHour = new Array(24).fill(false);
   for (let i = 0; i < end_hours; i++) {
     trackEndHour[i] = true;
   }
-
+  
   return (
     <div>
       {hour === end_hours ? (

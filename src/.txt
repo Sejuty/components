@@ -3124,3 +3124,164 @@ const Tooltip = ({ content, children }) => {
 };
 
 export default Tooltip;
+
+
+
+ return (
+    <div
+      className="relative flex w-fit flex-col group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+    >
+      <div ref={childrenRef}>{props.children}</div>
+      <div className="absolute mb-1 flex-col ml-2 mr-2 flex bottom-full">
+        <span className="relative  z-10 px-3 py-2 font-medium bg-[#6A13F4] text-[#FFFFFF] rounded-[8px] max-w-[200px] flex-grow max-h-[200px] overflow-y-auto">
+          {content}
+        </span>
+        <div className="w-[12px] h-[12px] rounded-[1px] ml-[10px] -mt-2 rotate-45 bg-[#6A13F4] "></div>
+      </div>
+    </div>
+  );
+
+  return (
+
+);
+
+
+
+
+ <div className="relative inline-block">
+      <div className="group inline-block">
+        {props.children}
+      </div>
+      <div className="absolute group-hover:block bg-gray-900 text-white text-xs px-2 py-1 rounded-lg whitespace-nowrap">
+        {content}
+      </div>
+    </div>
+
+
+
+      <div>
+      <div>
+        <span class="tooltip with-width-max-content" data-tooltip={content}>
+          Tooltip
+        </span>
+        with max-content and max-width and long text
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    
+  const tooltipOuterClass = `relative inline-flex cursor-pointer ${
+    position === "top" || position === "bottom"
+      ? "justify-center"
+      : position === "left" || position === "right"
+      ? "items-center"
+      : position === "top-right" || position === "bottom-right"
+      ? "justify-end"
+      : position === "top-left" || position === "bottom-left"
+      ? "justify-start"
+      : ""
+  }`;
+
+
+
+    const tooltipBoxClass = `relative ${
+    position === "left" || position === "right" ? "flex-1" : ""
+  } z-10 px-3 py-2 font-medium ${
+    variant === "primary"
+      ? "bg-[#6A13F4] text-[#FFFFFF]"
+      : variant === "secondary"
+      ? "bg-[#F0E7FE] text-[#6A13F4]"
+      : variant === "tertiary"
+      ? "bg-[#EBEBEB] text-[#000000]"
+      : variant === "success"
+      ? "bg-[#16B050] text-[#FFFFFF]"
+      : variant === "danger"
+      ? "bg-[#F43F5E] text-[#FFFFFF]"
+      : variant === "warning"
+      ? "bg-[#F3C318] text-[#FFFFFF]"
+      : variant === "clear"
+      ? "bg-white text-black"
+      : ""
+  } rounded-[8px] max-w-[200px] w-max max-h-[200px] overflow-y-auto`;
+
+
+    const tooltipBoxOuterClass = `absolute ${
+    position === "top"
+      ? `flex-col mb-1 items-center`
+      : position === "bottom"
+      ? `mt-1 flex-col-reverse items-center`
+      : position === "left"
+      ? `mr-1 items-center`
+      : position === "right"
+      ? `flex-row-reverse ml-1 items-center`
+      : position === "top-left"
+      ? `mb-1 flex-col ml-2`
+      : position === "bottom-left"
+      ? `flex-col-reverse mt-1 ml-2 `
+      : position === "top-right"
+      ? `mb-1 flex-col items-end mr-2`
+      : position === "bottom-right"
+      ? "mt-1 flex-col-reverse items-end mr-2"
+      : ""
+  } flex ${
+    position === "top" || position === "top-right" || position === "top-left"
+      ? "bottom-full"
+      : position === "bottom" ||
+        position === "bottom-right" ||
+        position === "bottom-left"
+      ? "top-full"
+      : position === "left"
+      ? "right-full"
+      : position === "right"
+      ? "left-full"
+      : ""
+  }`;
+
+
+  const tooltipArrowPositionClass = `w-[12px] h-[12px] rounded-[1px] ${
+    position === "top"
+      ? "-mt-2"
+      : position === "bottom"
+      ? "-mb-2"
+      : position === "left"
+      ? "-ml-2"
+      : position === "right"
+      ? "-mr-2"
+      : position === "top-left"
+      ? "ml-[10px] -mt-2"
+      : position === "bottom-left"
+      ? "-mb-2 ml-[10px]"
+      : position === "top-right"
+      ? "mr-[10px] -mt-2"
+      : position === "bottom-right"
+      ? "mr-[10px] -mb-2"
+      : ""
+  } rotate-45 ${
+    variant === "primary"
+      ? "bg-[#6A13F4]"
+      : variant === "secondary"
+      ? "bg-[#F0E7FE]"
+      : variant === "tertiary"
+      ? "bg-[#EBEBEB]"
+      : variant === "success"
+      ? "bg-[#16B050]"
+      : variant === "danger"
+      ? "bg-[#F43F5E]"
+      : variant === "warning"
+      ? "bg-[#F3C318]"
+      : variant === "clear"
+      ? "bg-white"
+      : ""
+  } ${caretVisibility}`;

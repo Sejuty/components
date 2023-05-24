@@ -14,7 +14,7 @@ function TimeSlot() {
     "#FAC898",
     "#77DD77",
   ];
-  const modified_food_availability = Empty.sections;
+  const modified_food_availability = ModifiedFoodAvailability.sections;
   const emptyObj = { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] };
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const tempSectionSlot = {};
@@ -48,6 +48,8 @@ function TimeSlot() {
     }
   });
 
+  console.log(tempSectionSlot)
+
   const [allSectionSlots, setSectionSlot] = useState(
     Object.keys(tempSectionSlot).length === 0 ? emptyObj : tempSectionSlot
   );
@@ -57,7 +59,7 @@ function TimeSlot() {
     (_, idx) => idx === false
   );
   const [dayButtons, setDayButtons] = useState(checkedDay);
-  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedDay, setSelectedDay] = useState(0); 
   const timeSlot = Object.values(sectionSlotsArray?.[selectedDay] || {});
   const [slots, setSlots] = useState(timeSlot);
   const totalSections = [...new Array(modified_food_availability.length)].map(
