@@ -9,7 +9,7 @@ function DropdownItem({ label, labelClass, iconName, iconNameClass, onClick }) {
       onClick={onClick}
     >
       <i className={`${iconName} text-xs ${iconNameClass}`} />
-      <div className={`${labelClass} text-xs font-medium`}>{label}</div>
+      <div className={`${labelClass} text-xs font-medium whitespace-nowrap`}>{label}</div>
     </div>
   );
 }
