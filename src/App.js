@@ -9,7 +9,7 @@ import DropdownItem from "./components/dropdown/DropdownItem";
 function App() {
   return (
     <div className="App">
-      {/* <div>
+      <div>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet
         nec mauris at mattis. Mauris ut purus ac sapien congue dapibus id tempus
         nunc. Curabitur tincidunt, diam eget vulputate porttitor, quam enim
@@ -27,15 +27,9 @@ function App() {
         In et ex mauris. Quisque non congue libero. Nam nulla nisl, dignissim
         vel nunc ac, vestibulum posuere neque. Nulla vitae gravida velit, id
         fringilla purus. Maecenas iaculis bibendum posuere. Vivamus vestibulum
-        ex massa <Tooltip
-          content="nishat tafannum nishat tafannum nishat tafannum"
-          position="bottom-right"
-          caret={true}
-          variant="danger"
-          trigger="hover"
-        >
-         <div className="underline bg-purple-500 p-4"> vel placerat eros</div>
-        </Tooltip> malesuada eget. Vivamus venenatis facilisis mi, sed interdum dolor
+        ex massa
+  
+        malesuada eget. Vivamus venenatis facilisis mi, sed interdum dolor
         ullamcorper id. Vivamus in nisi metus. Integer non leo vestibulum,
         scelerisque lectus vitae, efficitur lectus. Nullam sed nulla dui.
         Interdum et malesuada fames ac ante ipsum primis in faucibus.
@@ -43,9 +37,20 @@ function App() {
         ipsum suscipit sed. Proin tempor augue quis commodo maximus. Suspendisse
         risus arcu, ultrices sed feugiat ut, malesuada non odio. Nam in arcu vel
         orci lobortis ornare nec sed libero.
-      </div> */}
+      </div>
+      <Tooltip
+          content="nishat tafannum nishat tafannum nishat tafannum"
+          position="top"
+          caret={true}
+          variant="secondary"
+          trigger="click"
+          className="m-8"
+          shadow="md"
+        >
+          <div className="underline bg-purple-500 p-4"> vel placerat eros</div>
+        </Tooltip>
 
-      <Dropdown isOpen={false} isDisable={true}>
+      {/* <Dropdown isOpen={false} isDisable={true}>
         <DropdownToggle>
           <button className="bg-purple-500 p-3">click</button>
         </DropdownToggle>
@@ -53,7 +58,7 @@ function App() {
           <DropdownItem label="button 1 button button"></DropdownItem>
           <DropdownItem label="button 2"></DropdownItem>
         </DropdownMenu>
-      </Dropdown>
+      </Dropdown> */}
       {/* <TimeSlot/> */}
     </div>
   );

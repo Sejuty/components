@@ -3285,3 +3285,9 @@ export default Tooltip;
       ? "bg-white"
       : ""
   } ${caretVisibility}`;
+
+
+  const tooltipOuterClass = `tooltip-outer-class tooltip-outer-class-${position}`;
+  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position}`;
+  const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-${variant} shadow-${shadow} ${tooltipVisibility}`;
+  const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-${variant} ${caretVisibility} z-20`;

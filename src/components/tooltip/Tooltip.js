@@ -8,10 +8,13 @@ function Tooltip({
   trigger,
   timeout,
   variant,
+  className,
+  shadow,
   ...props
 }) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
   const caretVisibility = caret ? "" : "hidden";
+  const tooltipVisibility = isTooltipOpen ? "" : "hidden";
 
   const handleMouseEnter = () => {
     if (trigger === "hover") {
@@ -43,30 +46,25 @@ function Tooltip({
     };
   }, [isTooltipOpen, timeout]);
 
+  const tooltipOuterClass = `tooltip-outer-class tooltip-outer-class-${position}`;
+  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position} ${tooltipVisibility}`;
+  const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-${variant} shadow-${shadow} `;
+  const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-${variant} ${caretVisibility} z-20`;
+
   return (
-    <div
-      className={`tooltip-outer-class tooltip-outer-class-${position}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-    >
-      <div>{props.children}</div>
-      {isTooltipOpen ? (
-        <>
-          <div
-            className={`tooltip-box-outer-class tooltip-box-outer-class-${position}`}
-          >
-            <span
-              className={`tooltip-box-class tooltip-box-class-${position} bg-${variant}`}
-            >
-              {content}
-            </span>
-            <div
-              className={`tooltip-arrow-position-class tooltip-arrow-position-class-${position} bg-${variant} ${caretVisibility}`}
-            ></div>
-          </div>
-        </>
-      ) : null}
+    <div className={`${className}`}>
+      <div
+        className={tooltipOuterClass}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+      >
+        <div>{props.children}</div>
+        <div className={tooltipBoxOuterClass}>
+          <span className={tooltipBoxClass}>{content}</span>
+          <div className={tooltipCaretPositionClass}></div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -90,6 +88,8 @@ Tooltip.propTypes = {
     "warning",
     "clear",
   ]),
+  className: PropTypes.string,
+  shadow: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "2xl", "3xl"]),
 };
 
 Tooltip.defaultProps = {
@@ -99,6 +99,8 @@ Tooltip.defaultProps = {
   trigger: "hover",
   timeout: 3000,
   variant: "primary",
+  className: "",
+  shadow: "none",
 };
 
 export default Tooltip;
