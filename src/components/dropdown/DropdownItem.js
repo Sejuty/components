@@ -1,11 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-function DropdownItem({ label, labelClass, name, nameClass, onClick }) {
+function DropdownItem({ label, labelClass, iconName, iconNameClass, onClick }) {
   return (
-    <div className="p-2 text-[12px] flex cursor-pointer" onClick={onClick}>
-      <div className={`${labelClass} text-[12px] font-medium`}>{label}</div>
-      <i className={`${name} text-lg ${nameClass}`} />
+    <div
+      role="presentation"
+      className="p-1 text-xs flex items-center gap-x-1 cursor-pointer"
+      onClick={onClick}
+    >
+      <i className={`${iconName} text-xs ${iconNameClass}`} />
+      <div className={`${labelClass} text-xs font-medium`}>{label}</div>
     </div>
   );
 }
@@ -13,16 +17,16 @@ function DropdownItem({ label, labelClass, name, nameClass, onClick }) {
 DropdownItem.propTypes = {
   label: PropTypes.string,
   labelClass: PropTypes.string,
-  name: PropTypes.string,
-  nameClass: PropTypes.string,
+  iconName: PropTypes.string,
+  iconNameClass: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 DropdownItem.defaultProps = {
-  label: "button",
-  labelClass: "",
-  name: "",
-  nameClass: "",
-  onClick: () => { console.log("clicked")},
+  label: '',
+  labelClass: '',
+  iconName: '',
+  iconNameClass: '',
+  onClick: () => {},
 };
 export default DropdownItem;

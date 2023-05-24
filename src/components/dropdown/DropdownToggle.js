@@ -1,15 +1,13 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-const DropdownToggle = ({ children }) => {
-  return <div className="ml-[120px]">{children}</div>;
-};
+const DropdownToggle = ({ children }) => <div>{children}</div>;
 
 DropdownToggle.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
 };
 
 DropdownToggle.defaultProps = {
-  children: null
+  children: null,
 };
 export default DropdownToggle;

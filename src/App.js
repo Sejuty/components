@@ -1,10 +1,15 @@
 import Tooltip from "./components/tooltip/Tooltip";
-import TimeSlot from "./components/time-slot/TimeSlot"
+import TimeSlot from "./components/time-slot/TimeSlot";
+import Dropdown from "./components/dropdown/Dropdown";
+import DropdownMenu from "./components/dropdown/DropdownMenu";
+import DropdownToggle from "./components/dropdown/DropdownToggle";
+import "./lib/css/allspark.min.css";
+import DropdownItem from "./components/dropdown/DropdownItem";
 
 function App() {
   return (
     <div className="App">
-      <div>
+      {/* <div>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet
         nec mauris at mattis. Mauris ut purus ac sapien congue dapibus id tempus
         nunc. Curabitur tincidunt, diam eget vulputate porttitor, quam enim
@@ -38,8 +43,20 @@ function App() {
         ipsum suscipit sed. Proin tempor augue quis commodo maximus. Suspendisse
         risus arcu, ultrices sed feugiat ut, malesuada non odio. Nam in arcu vel
         orci lobortis ornare nec sed libero.
-      </div>
-
+      </div> */}
+      <Dropdown
+        children={<button className="text-purple-400"> hello</button>}
+        isOpen={false}
+      />
+      <Dropdown isOpen={false}>
+        <DropdownToggle>
+          <button>click</button>
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem label="button 1"></DropdownItem>
+          <DropdownItem label="button 2"></DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
       {/* <TimeSlot/> */}
     </div>
   );
