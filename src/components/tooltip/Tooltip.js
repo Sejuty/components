@@ -47,7 +47,7 @@ function Tooltip({
   }, [isTooltipOpen, timeout]);
 
   const tooltipOuterClass = `tooltip-outer-class tooltip-outer-class-${position}`;
-  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position}`;
+  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position} ${tooltipVisibility}`;
   const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-tooltip-${variant} tooltip-box-class-shadow-${shadow}`;
   const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-tooltip-${variant} ${caretVisibility} z-20`;
 
