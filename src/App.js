@@ -39,8 +39,7 @@ function App() {
         orci lobortis ornare nec sed libero.
       </div>
       <Tooltip
-          content="nishat tafannum nishat tafannum nishat tafannum"
-          position="top"
+          position="bottom-right"
           caret={true}
           variant="success"
           className="m-8"

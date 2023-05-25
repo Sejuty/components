@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -12,5 +14,14 @@ module.exports = {
       clear: "#ffffff",
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase }) {
+      addBase({
+        "@font-face": {
+          fontFamily: "Inter",
+          src: "./src/fonts/Inter.ttf",
+        },
+      });
+    }),
+  ],
 };

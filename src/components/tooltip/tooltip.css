@@ -47,7 +47,7 @@
   @apply flex-col-reverse items-end mr-2 mt-1 top-full;
 }
 .tooltip-box-class {
-  @apply relative z-10 max-w-[200px] max-h-[200px] w-max overflow-y-auto p-2 rounded-lg;
+  @apply relative z-10 max-w-[200px] max-h-[200px] w-max overflow-y-auto px-3 py-2 rounded-lg;
 }
 .tooltip-box-class-left,
 .tooltip-box-class-right {
@@ -82,29 +82,28 @@
   box-shadow: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
 }
 .bg-tooltip-primary {
-  @apply bg-primary text-[#fff];
+  @apply bg-primary text-[#ffffff];
 }
 .bg-tooltip-secondary {
   @apply bg-secondary text-[#6a13f4];
 }
 .bg-tooltip-tertiary {
-  @apply bg-tertiary text-[#000];
+  @apply bg-tertiary text-[#000000];
 }
 .bg-tooltip-success {
-  @apply bg-success text-[#fff];
+  @apply bg-success text-[#ffffff];
 }
 .bg-tooltip-danger {
-  @apply bg-danger text-[#fff];
+  @apply bg-danger text-[#ffffff];
 }
 .bg-tooltip-warning {
-  @apply bg-warning text-[#fff];
+  @apply bg-warning text-[#ffffff];
 }
 .bg-tooltip-clear {
-  @apply bg-clear text-[#000];
+  @apply bg-clear text-[#000000];
 }
 .tooltip-caret-position-class {
   @apply w-3 h-3 rotate-45 rounded-[1px];
-  /* box-shadow: 10px 10px lightblue; */
 }
 .tooltip-caret-position-class-top {
   @apply -mt-[7px];

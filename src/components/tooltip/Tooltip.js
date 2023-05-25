@@ -13,8 +13,8 @@ function Tooltip({
   ...props
 }) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
-  const caretVisibility = caret ? "" : "hidden";
   const tooltipVisibility = isTooltipOpen ? "" : "hidden";
+  const caretVisibility = caret ? "" : "hidden";
 
   const handleMouseEnter = () => {
     if (trigger === "hover") {
@@ -51,10 +51,9 @@ function Tooltip({
   const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-tooltip-${variant} tooltip-box-class-shadow-${shadow}`;
   const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-tooltip-${variant} ${caretVisibility} z-20`;
 
-  if(!props.children){
-    return (<div className="bg-warning"> Error! No children available </div>)
+  if (!props.children) {
+    return <div> Error! No children available </div>;
   }
-
 
   return (
     <div className={`${className}`}>
