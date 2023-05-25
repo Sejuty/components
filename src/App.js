@@ -42,24 +42,13 @@ function App() {
           content="nishat tafannum nishat tafannum nishat tafannum"
           position="top"
           caret={true}
-          variant="secondary"
-          trigger="click"
+          variant="success"
           className="m-8"
-          shadow="md"
+          shadow="lg"
         >
-          <div className="underline bg-purple-500 p-4"> vel placerat eros</div>
+          <div className="underline bg-primary p-4"> vel placerat eros</div>
         </Tooltip>
 
-      {/* <Dropdown isOpen={false} isDisable={true}>
-        <DropdownToggle>
-          <button className="bg-purple-500 p-3">click</button>
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem label="button 1 button button"></DropdownItem>
-          <DropdownItem label="button 2"></DropdownItem>
-        </DropdownMenu>
-      </Dropdown> */}
-      {/* <TimeSlot/> */}
     </div>
   );
 }

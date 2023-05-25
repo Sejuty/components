@@ -81,26 +81,26 @@
 .tooltip-box-class-shadow-3xl {
   box-shadow: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
 }
-.bg-primary {
-  @apply bg-[#6a13f4] text-[#fff];
+.bg-tooltip-primary {
+  @apply bg-primary text-[#fff];
 }
-.bg-secondary {
-  @apply bg-[#f0e7fe] text-[#6a13f4];
+.bg-tooltip-secondary {
+  @apply bg-secondary text-[#6a13f4];
 }
-.bg-tertiary {
-  @apply bg-[#ebebeb] text-[#000];
+.bg-tooltip-tertiary {
+  @apply bg-tertiary text-[#000];
 }
-.bg-success {
-  @apply bg-[#16b050] text-[#fff];
+.bg-tooltip-success {
+  @apply bg-success text-[#fff];
 }
-.bg-danger {
-  @apply bg-[#F43F5E] text-[#fff];
+.bg-tooltip-danger {
+  @apply bg-danger text-[#fff];
 }
-.bg-warning {
-  @apply bg-[#f3c318] text-[#fff];
+.bg-tooltip-warning {
+  @apply bg-warning text-[#fff];
 }
-.bg-clear {
-  @apply bg-[#fff] text-[#000];
+.bg-tooltip-clear {
+  @apply bg-clear text-[#000];
 }
 .tooltip-caret-position-class {
   @apply w-3 h-3 rotate-45 rounded-[1px];

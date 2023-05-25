@@ -47,9 +47,14 @@ function Tooltip({
   }, [isTooltipOpen, timeout]);
 
   const tooltipOuterClass = `tooltip-outer-class tooltip-outer-class-${position}`;
-  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position} ${tooltipVisibility}`;
-  const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-${variant} shadow-${shadow} `;
-  const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-${variant} ${caretVisibility} z-20`;
+  const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position}`;
+  const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-tooltip-${variant} tooltip-box-class-shadow-${shadow}`;
+  const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-tooltip-${variant} ${caretVisibility} z-20`;
+
+  if(!props.children){
+    return (<div className="bg-warning"> Error! No children available </div>)
+  }
+
 
   return (
     <div className={`${className}`}>
@@ -61,7 +66,7 @@ function Tooltip({
       >
         <div>{props.children}</div>
         <div className={tooltipBoxOuterClass}>
-          <span className={tooltipBoxClass}>{content}</span>
+          <div className={tooltipBoxClass}>{content}</div>
           <div className={tooltipCaretPositionClass}></div>
         </div>
       </div>
@@ -75,7 +80,7 @@ Tooltip.propTypes = {
     PropTypes.string,
     PropTypes.element,
     PropTypes.number,
-  ]).isRequired,
+  ]),
   caret: PropTypes.bool,
   trigger: PropTypes.oneOf(["click", "hover"]),
   timeout: PropTypes.number,
