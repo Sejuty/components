@@ -1,5 +1,8 @@
-import React from 'react';
+import React from "react";
 
-const DropdownMenu = ({ children }) => <div className='flex flex-col gap-y-1'>{children}</div>;
+const DropdownMenu = ({ children }) => {
+
+  return <div className="flex flex-col gap-y-1">{children}</div>;
+};
 
 export default DropdownMenu;

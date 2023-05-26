@@ -1,32 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-function DropdownItem({ label, labelClass, iconName, iconNameClass, onClick }) {
+function DropdownItem({ onDropdownItemClick, isDisable, ...props }) {
+  
+  const handleClick = () => {
+    onDropdownItemClick();
+  };
+
+  const dropdownItemClassName = `p-1 text-xs flex items-center gap-x-1 cursor-pointer ${
+    isDisable ? "pointer-events-none opacity-50 text-gray-300" : ""
+  }`;
+
   return (
     <div
       role="presentation"
-      className="p-1 text-xs flex items-center gap-x-1 cursor-pointer"
-      onClick={onClick}
+      className={dropdownItemClassName}
+      onClick={handleClick}
     >
-      <i className={`${iconName} text-xs ${iconNameClass}`} />
-      <div className={`${labelClass} text-xs font-medium whitespace-nowrap`}>{label}</div>
+      <div>{props.children}</div>
     </div>
   );
 }
 
 DropdownItem.propTypes = {
-  label: PropTypes.string,
-  labelClass: PropTypes.string,
-  iconName: PropTypes.string,
-  iconNameClass: PropTypes.string,
-  onClick: PropTypes.func,
+  onDropdownItemClick: PropTypes.func,
+  isDisable: PropTypes.bool,
+  trigger: PropTypes.oneOf(["hover", "click"]),
 };
 
 DropdownItem.defaultProps = {
-  label: '',
-  labelClass: '',
-  iconName: '',
-  iconNameClass: '',
-  onClick: () => {},
+  onDropdownItemClick: () => {},
+  isDisable: false,
+  trigger: "click",
 };
 export default DropdownItem;

@@ -118,14 +118,14 @@
   @apply -mr-[7px];
 }
 .tooltip-caret-position-class-top-right {
-  @apply mr-2.5 -mt-[7px];
+  @apply mr-[12px] -mt-[7px];
 }
 .tooltip-caret-position-class-top-left {
-  @apply ml-2.5 -mt-[7px];
+  @apply ml-[12px] -mt-[7px];
 }
 .tooltip-caret-position-class-bottom-right {
-  @apply mr-2.5 -mb-[7px];
+  @apply mr-[12px] -mb-[7px];
 }
 .tooltip-caret-position-class-bottom-left {
-  @apply ml-2.5 -mb-[7px];
+  @apply ml-[12px] -mb-[7px];
 }

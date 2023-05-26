@@ -3291,3 +3291,187 @@ export default Tooltip;
   const tooltipBoxOuterClass = `tooltip-box-outer-class tooltip-box-outer-class-${position}`;
   const tooltipBoxClass = `tooltip-box-class tooltip-box-class-${position} bg-${variant} shadow-${shadow} ${tooltipVisibility}`;
   const tooltipCaretPositionClass = `tooltip-caret-position-class tooltip-caret-position-class-${position} bg-${variant} ${caretVisibility} z-20`;
+
+
+  import React from "react";
+
+const DropdownMenu = ({ children }) => {
+  const menuItems = React.Children.map(children, (child, index) => {
+    // Assign a unique ID to each child
+    const itemId = `dropdown-item-${index}`;
+
+    // Clone the child element and add the ID as a prop
+    const clonedChild = React.cloneElement(child, { id: itemId });
+
+    return clonedChild;
+  });
+
+  return <div className="flex flex-col gap-y-1">{menuItems}</div>;
+};
+
+export default DropdownMenu;
+
+
+
+import React, { useState } from "react";
+
+const Dropdown = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className="dropdown">
+      <DropdownToggle toggleDropdown={toggleDropdown}>
+        {children[0]}
+      </DropdownToggle>
+      {isOpen && (
+        <DropdownMenu>
+          {React.Children.map(children.slice(1), (child, index) => (
+            child.type === DropdownItem ? (
+              React.cloneElement(child, { key: index })
+            ) : null
+          ))}
+        </DropdownMenu>
+      )}
+    </div>
+  );
+};
+
+const DropdownToggle = ({ toggleDropdown, children }) => (
+  <button className="dropdown-toggle" onClick={toggleDropdown}>
+    {children}
+  </button>
+);
+
+const DropdownMenu = ({ children }) => (
+  <div className="dropdown-menu">
+    {children}
+  </div>
+);
+
+const DropdownItem = ({ children }) => (
+  <div className="dropdown-item">{children}</div>
+);
+
+export default function App() {
+  return (
+    <Dropdown>
+      <DropdownToggle>click</DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem>hello</DropdownItem>
+        <DropdownItem>hello</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+}
+
+
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+
+function DropdownItem({ onDropdownItemClick, itemId, trigger, ...props }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleTrigger = () => {
+    if (trigger === "click") {
+      if (onDropdownItemClick) {
+        onDropdownItemClick(itemId);
+      }
+    } else if (trigger === "hover") {
+      setIsHovered(true);
+      if (onDropdownItemClick && isHovered) {
+        onDropdownItemClick(itemId);
+      }
+    }
+  };
+
+  return (
+    <div
+      role="presentation"
+      className={`p-1 text-xs flex items-center gap-x-1 cursor-pointer ${
+        isHovered ? "bg-gray-200" : ""
+      }`}
+      onClick={handleTrigger}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div>{props.children}</div>
+    </div>
+  );
+}
+
+DropdownItem.propTypes = {
+  onDropdownItemClick: PropTypes.func,
+  itemId: PropTypes.string,
+  trigger: PropTypes.oneOf(["click", "hover"]),
+};
+
+DropdownItem.defaultProps = {
+  onDropdownItemClick: () => {},
+  trigger: "click",
+};
+
+export default DropdownItem;
+
+
+import React, { useEffect, useState, useRef } from "react";
+import PropTypes from "prop-types";
+
+const Dropdown = ({ isOpen, children }) => {
+  const [open, setOpen] = useState(isOpen);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    setOpen(!open);
+  };
+
+  const closeDropdownMenu = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
+
+  const dropdownClassName = `relative ml-[120px] w-fit`;
+
+  const dropdownFirstChildrenClassName = `action-dropdown absolute mt-1 p-1 right-0 bg-white rounded-sm  shadow-[0px_1px_2px_rgba(0,0,0,0.3),0px_1px_3px_1px_rgba(0,0,0,0.15)] min-w-[120px]
+  ${open ? "visible" : "hidden"}`;
+
+  return (
+    <div className={dropdownClassName}>
+      <div
+        role="presentation"
+        className="flex items-center justify-between cursor-pointer"
+        onClick={toggleDropdown}
+      >
+        {children[0]}
+      </div>
+      <div ref={dropdownRef} className={dropdownFirstChildrenClassName}>
+        {React.Children.map(children[1], (child) => {
+          return React.cloneElement(child, {
+            closeDropdown: closeDropdownMenu,
+          });
+        })}
+      </div>
+    </div>
+  );
+};
+
+Dropdown.propTypes = {
+  isOpen: PropTypes.bool,
+  children: PropTypes.array,
+  isDisable: PropTypes.bool,
+};
+
+Dropdown.defaultProps = {
+  isOpen: false,
+  children: null,
+  isDisable: false,
+};
+
+export default Dropdown;
