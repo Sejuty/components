@@ -1,0 +1,119 @@
+/* .sc-chips {
+  @apply px-2;
+  @apply rounded;
+  @apply cursor-pointer;
+  @apply select-none;
+  @apply font-medium;
+  @apply rounded-xl;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  @apply w-max;
+  font-size: 12px;
+  line-height: 140%;
+  letter-spacing: -0.5%;
+}
+
+.sc-chips:focus {
+  @apply outline-none;
+}
+
+.sc-chips:disabled {
+  @apply cursor-not-allowed;
+}
+
+.sc-chips-sm {
+  height: 18px;
+  font-size: 10px;
+}
+
+.sc-chips-md {
+  height: 21px;
+}
+
+.sc-chips-lg {
+  height: 24px;
+  font-size: 14px;
+}
+
+.sc-chips-primary {
+  @apply bg-primary;
+  @apply text-primary-lightest;
+}
+
+.sc-chips-primary-outline,
+.sc-chips-secondary-outline {
+  @apply bg-white;
+  @apply text-primary;
+  @apply border;
+  @apply border-primary;
+}
+
+.sc-chips-secondary {
+  @apply bg-primary-lightest;
+  @apply text-primary;
+}
+
+.sc-chips-tertiary {
+  @apply bg-black;
+  @apply text-white;
+}
+
+.sc-chips-tertiary-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-black;
+  @apply text-black;
+}
+
+.sc-chips-success {
+  @apply bg-green-lightest;
+  @apply text-green;
+}
+
+.sc-chips-success-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-green;
+  @apply text-green;
+}
+
+.sc-chips-warning {
+  @apply bg-yellow-lightest;
+  @apply text-yellow;
+}
+
+.sc-chips-warning-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-yellow;
+  @apply text-yellow;
+}
+
+.sc-chips-danger {
+  @apply bg-red-lightest;
+  @apply text-red;
+}
+
+.sc-chips-danger-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-red;
+  @apply text-red;
+}
+
+.sc-chips-disabled {
+  @apply cursor-not-allowed;
+  @apply bg-grey-lighter;
+  @apply text-grey-dark;
+}
+
+.sc-chips-primary-outline.sc-chips-disabled,
+.sc-chips-secondary-outline.sc-chips-disabled,
+.sc-chips-success-outline.sc-chips-disabled,
+.sc-chips-warning-outline.sc-chips-disabled,
+.sc-chips-danger-outline.sc-chips-disabled {
+  @apply border;
+  @apply border-grey-dark;
+  @apply text-grey-dark;
+} */

@@ -3475,3 +3475,287 @@ Dropdown.defaultProps = {
 };
 
 export default Dropdown;
+
+
+<div className="relative m-4 flex flex-col h-screen">
+  <div className="flex-grow">
+    <div>
+      <div>
+        <SCInput
+          label="Deliver to"
+          placeholder="V Corporate Center"
+          className="mb-4"
+          inputClass="border"
+        />
+      </div>
+      <SCInput
+        label="Select your Branch"
+        placeholder="Search for branches"
+        inputClass="border"
+      />
+      <SCInput label="Selected Branch" inputClass="border" />
+    </div>
+  </div>
+
+  <div className="flex-shrink-0">
+    <SCButton className="w-full">Confirm</SCButton>
+  </div>
+</div>
+
+
+ <div className="h-screen">
+      <div className="px-4 py-2 shadow-lg">
+        <div className="flex items-center gap-x-2">
+          <div>
+            <BsArrowLeft className="text-primary" />
+          </div>
+          <div className="text-[16px] font-medium">Branches Near You</div>
+        </div>
+      </div>
+      <div className="relative m-4 flex flex-col h-full">
+        <div>
+          <div>
+            <SCInput
+              label="Deliver to"
+              placeholder="V Corporate Center"
+              className="mb-4"
+              inputClass="border"
+            />
+          </div>
+          <SCInput
+            label="Select your Branch"
+            placeholder="Search for branches"
+            inputClass="border"
+          />
+          <SCInput label="Selected Branch" inputClass="border" />
+        </div>
+
+        <div>
+          <SCButton className="w-full"> Confirm</SCButton>
+        </div>
+      </div>
+    </div>
+
+
+
+    import React, { useState, useEffect } from 'react';
+
+const Autocomplete = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedSuggestionIndex((prevIndex) => {
+          const newIndex = prevIndex - 1;
+          if (newIndex < 0) {
+            return suggestions.length - 1;
+          }
+          return newIndex;
+        });
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedSuggestionIndex((prevIndex) => {
+          const newIndex = prevIndex + 1;
+          if (newIndex >= suggestions.length) {
+            return 0;
+          }
+          return newIndex;
+        });
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [suggestions]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    // Update suggestions based on the input value
+    // (e.g., fetchSuggestions(value));
+  };
+
+  return (
+    <div>
+      {/* Input field */}
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Type here..."
+      />
+
+      {/* Suggestions */}
+      <ul>
+        {suggestions.map((item, index) => (
+          <li
+            key={item}
+            className={index === selectedSuggestionIndex ? 'selected' : ''}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Autocomplete;
+
+
+const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    if (value.length >= 3) {
+      // Fetch suggestions based on the input value
+      // (e.g., fetchSuggestions(value));
+    } else {
+      setSuggestions([]); // Reset suggestions when input length is less than 3
+    }
+  };
+
+  return (
+    <div>
+  
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Type here..."
+      />
+
+
+      <ul>
+        {suggestions.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+
+
+export default Autocomplete;
+In this example, the condition if (value.length >= 3) is added in the handleInputChange function to check if the input value has at least three characters. If it meets the minimum length requirement, you can proceed to fetch suggestions based on the input value. Otherwise, the suggestions are reset to an empty array.
+
+Make sure to implement the logic to fetch suggestions from an API or a predefined list based on the input value.
+
+function findMatches(wordToMatch, cities) {
+  return cities.filter((place) => {
+    const regex = new RegExp(wordToMatch, "gi");
+    return place.city.match(regex) || place.state.match(regex);
+  });
+}
+
+
+
+
+const placeAutoCompleteMockData = PlaceAutoCompleteMockData;
+  const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const fetchSuggestions = (value) => {
+    const filteredSuggestions = placeAutoCompleteMockData.filter((item) => {
+      const regex = new RegExp(value, "gi");
+      return item.address.toLowerCase().match(regex);
+    });
+    setSuggestions(filteredSuggestions);
+  };
+
+  const onSelectALocation = (e) => {
+    const selectedLocation = e.target.innerText;
+    setInputValue(selectedLocation);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    if (value.length >= 3) {
+      fetchSuggestions(value);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Type here..."
+      />
+
+      <ul>
+        {suggestions.map((item) => (
+          <div key={item.place_id} className="px-12 py-8 divide-y shadow">
+            <li className="text-xs" onClick={(e) => onSelectALocation(e)}>
+              {item.address}
+            </li>
+          </div>
+        ))}
+      </ul>
+
+      <SCButton label="Confirm" disabled />
+    </div>
+  );
+
+
+  import React, { useEffect } from 'react';
+
+const LocationAccess = () => {
+  useEffect(() => {
+    const askForLocationAccess = async () => {
+      try {
+        // Check if the Geolocation API is supported
+        if (navigator.geolocation) {
+          // Prompt for location access
+          await navigator.permissions.query({ name: 'geolocation' });
+
+          // Check if permission is granted
+          if (navigator.permissions && navigator.permissions.state === 'granted') {
+            // Location access granted
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                // Handle successful location access
+                const { latitude, longitude } = position.coords;
+                console.log('Location accessed:', latitude, longitude);
+              },
+              (error) => {
+                // Handle error or denied location access
+                console.error('Error accessing location:', error.message);
+              }
+            );
+          } else {
+            // Location access denied
+            console.log('Location access denied.');
+          }
+        } else {
+          // Geolocation API not supported
+          console.error('Geolocation is not supported by this browser.');
+        }
+      } catch (error) {
+        console.error('Error occurred while accessing location:', error);
+      }
+    };
+
+    askForLocationAccess();
+  }, []);
+
+  return (
+    <div>
+      <h2>Location Access</h2>
+      {/* Your component JSX */}
+    </div>
+  );
+};
+
+export default LocationAccess;

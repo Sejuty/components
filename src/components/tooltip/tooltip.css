@@ -1,4 +1,4 @@
-.tooltip-outer-class {
+/* .tooltip-outer-class {
   @apply inline-flex relative cursor-pointer;
 }
 .tooltip-outer-class-left,
@@ -128,4 +128,4 @@
 }
 .tooltip-caret-position-class-bottom-left {
   @apply ml-[12px] -mb-[7px];
-}
+} */
