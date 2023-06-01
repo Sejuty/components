@@ -17,6 +17,7 @@ const Dropdown = ({ isOpen, trigger, shadow, children }) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+  
   const [open, setOpen] = useState(isOpen);
   const dropdownRef = useRef(null);
 

@@ -7,11 +7,12 @@ import "./lib/css/allspark.min.css";
 import DropdownItem from "./components/dropdown/DropdownItem";
 import AutoComplete from "./components/autocomplete/AutoComplete";
 import SCChips from "./components/chips/SCChips";
+import BranchesNearYou from "./components/branches/BranchesNearYou";
 
 function App() {
   return (
     <div className="App">
-      <AutoComplete/>
+     <AutoComplete/>
     </div>
   );
 }
