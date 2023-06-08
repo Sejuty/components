@@ -3759,3 +3759,24 @@ const LocationAccess = () => {
 };
 
 export default LocationAccess;
+import React from 'react';
+import { Story } from '@storybook/react';
+import SCTooltip from './SCTooltip';
+
+export default {
+  title: 'Components/SCTooltip',
+  component: SCTooltip,
+};
+
+const Template: Story = (args) => <SCTooltip {...args}>Your Children Component Here</SCTooltip>;
+
+export const Default = Template.bind({});
+Default.args = {
+  className: 'inline-flex',
+  content: 'nishat tafannum',
+  position: 'bottom',
+  shadow: 'lg',
+  timeout: 10000,
+  trigger: 'click',
+  variant: 'danger',
+};

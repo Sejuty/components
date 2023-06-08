@@ -1,4 +1,19 @@
-/* .tooltip-outer-class {
+:root {
+  --box-shadow-xs: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  --box-shadow-sm: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  --box-shadow-md: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
+    0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+  --box-shadow-lg: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
+    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  --box-shadow-xl: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
+    0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+  --box-shadow-2xl: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+  --box-shadow-3xl: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
+  --box-shadow-none: none;
+}
+
+.tooltip-outer-class {
   @apply inline-flex relative cursor-pointer;
 }
 .tooltip-outer-class-left,
@@ -57,50 +72,46 @@
   box-shadow: 0px;
 }
 .tooltip-box-class-shadow-xs {
-  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  box-shadow: var(--box-shadow-xs);
 }
 .tooltip-box-class-shadow-sm {
-  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
-    0px 1px 2px rgba(16, 24, 40, 0.06);
+  box-shadow: var(--box-shadow-sm);
 }
 .tooltip-box-class-shadow-md {
-  box-shadow: 0px 4px 8px -2px rgba(16, 24, 40, 0.1),
-    0px 2px 4px -2px rgba(16, 24, 40, 0.06);
+  box-shadow: var(--box-shadow-md);
 }
 .tooltip-box-class-shadow-lg {
-  box-shadow: 0px 12px 16px -4px rgba(16, 24, 40, 0.08),
-    0px 4px 6px -2px rgba(16, 24, 40, 0.03);
+  box-shadow: var(--box-shadow-lg);
 }
 .tooltip-box-class-shadow-xl {
-  box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
-    0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+  box-shadow: var(--box-shadow-xl);
 }
 .tooltip-box-class-shadow-2xl {
-  box-shadow: 0px 24px 48px -12px rgba(16, 24, 40, 0.18);
+  box-shadow: var(--box-shadow-2xl);
 }
 .tooltip-box-class-shadow-3xl {
-  box-shadow: 0px 32px 64px -12px rgba(16, 24, 40, 0.14);
+  box-shadow: var(--box-shadow-3xl);
 }
 .bg-tooltip-primary {
-  @apply bg-primary text-[#ffffff];
+  @apply bg-primary text-white;
 }
 .bg-tooltip-secondary {
-  @apply bg-secondary text-[#6a13f4];
+  @apply bg-primary-lightest text-primary;
 }
 .bg-tooltip-tertiary {
-  @apply bg-tertiary text-[#000000];
+  @apply bg-grey-lighter text-black;
 }
 .bg-tooltip-success {
-  @apply bg-success text-[#ffffff];
+  @apply bg-green text-white;
 }
 .bg-tooltip-danger {
-  @apply bg-danger text-[#ffffff];
+  @apply bg-red text-white;
 }
 .bg-tooltip-warning {
-  @apply bg-warning text-[#ffffff];
+  @apply bg-yellow text-white;
 }
 .bg-tooltip-clear {
-  @apply bg-clear text-[#000000];
+  @apply bg-white text-black;
 }
 .tooltip-caret-position-class {
   @apply w-3 h-3 rotate-45 rounded-[1px];
@@ -128,4 +139,4 @@
 }
 .tooltip-caret-position-class-bottom-left {
   @apply ml-[12px] -mb-[7px];
-} */
+}

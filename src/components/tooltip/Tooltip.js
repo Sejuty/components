@@ -13,6 +13,7 @@ function Tooltip({
   ...props
 }) {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  
   const tooltipVisibility = isTooltipOpen ? "" : "hidden";
   const caretVisibility = caret ? "" : "hidden";
 
@@ -91,7 +92,7 @@ Tooltip.propTypes = {
     "danger",
     "warning",
     "clear",
-  ]),
+  ]).isRequired,
   className: PropTypes.string,
   shadow: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "2xl", "3xl"]),
 };

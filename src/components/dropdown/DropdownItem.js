@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
+import "./dropdown.css"
 
 function DropdownItem({ onDropdownItemClick, isDisable, ...props }) {
-  
   const handleClick = () => {
     onDropdownItemClick();
   };
 
-  const dropdownItemClassName = `p-1 text-xs flex items-center gap-x-1 cursor-pointer ${
-    isDisable ? "pointer-events-none opacity-50 text-gray-300" : ""
+  const dropdownItemsStyle = `dropdown-item ${
+    isDisable ? "dropdown-item-disabled" : ""
   }`;
 
   return (
     <div
       role="presentation"
-      className={dropdownItemClassName}
+      className={dropdownItemsStyle}
       onClick={handleClick}
     >
       <div>{props.children}</div>

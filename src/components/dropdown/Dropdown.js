@@ -4,6 +4,7 @@ import DropdownMenu from "./DropdownMenu";
 import "./dropdown.css";
 
 const Dropdown = ({ isOpen, trigger, shadow, children }) => {
+  
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -17,7 +18,7 @@ const Dropdown = ({ isOpen, trigger, shadow, children }) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-  
+
   const [open, setOpen] = useState(isOpen);
   const dropdownRef = useRef(null);
 
@@ -46,17 +47,15 @@ const Dropdown = ({ isOpen, trigger, shadow, children }) => {
     setOpen(isOpen);
   }, [isOpen]);
 
-  const dropdownFirstChildrenClassName = `action-dropdown ${
+  const dropdownFirstChildStyle = `dropdown-position ${
     open ? "visible" : ""
-  } action-dropdown-${shadow}`;
-
-  console.log(dropdownFirstChildrenClassName);
+  } dropdown-shadow-${shadow}`;
 
   return (
-    <div className="relative">
+    <div className="dropdown-button-position">
       <div
         role="presentation"
-        className="flex items-center justify-between cursor-pointer"
+        className="dropdown-button"
         ref={dropdownRef}
         onClick={toggleDropdown}
         onMouseEnter={handleMouseEnter}
@@ -64,7 +63,7 @@ const Dropdown = ({ isOpen, trigger, shadow, children }) => {
       >
         {children[0]}
       </div>
-      <div className={dropdownFirstChildrenClassName}>
+      <div className={dropdownFirstChildStyle}>
         <DropdownMenu children={children[1]} open={open} />
       </div>
     </div>
@@ -76,7 +75,7 @@ Dropdown.propTypes = {
   children: PropTypes.array,
   isDisable: PropTypes.bool,
   trigger: PropTypes.oneOf(["hover", "click"]),
-  shadow: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "2xl", "3xl"])
+  shadow: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl", "2xl", "3xl"]),
 };
 
 Dropdown.defaultProps = {
@@ -84,7 +83,7 @@ Dropdown.defaultProps = {
   children: null,
   isDisable: false,
   trigger: "click",
-  shadow:"md"
+  shadow: "md",
 };
 
 export default Dropdown;
