@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import Branches from "../../json/select_branch.json";
 import DeliveryCard from "./DeliveryCard";
+import Pickupfrom from "./Pickupfrom";
+import DeliverTo from "./DeliverTo";
+import RiderInfo from "../rider_info/RiderInfo";
 
 function BranchesNearYou() {
   useEffect(() => {
@@ -24,7 +27,6 @@ function BranchesNearYou() {
           <div className="text-lg font-medium">Delivery address</div>
         </div>
       </div>
-      <DeliveryCard />
       <div className="mx-16">
         <div className="flex flex-col my-16">
           <div className="text-lg font-medium mb-8">Select Your Branch</div>
