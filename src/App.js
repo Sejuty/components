@@ -1,18 +1,17 @@
-import Dropdown from "./components/dropdown/Dropdown";
-import DropdownMenu from "./components/dropdown/DropdownMenu";
-import DropdownToggle from "./components/dropdown/DropdownToggle";
 import "./lib/css/allspark.min.css";
-import DropdownItem from "./components/dropdown/DropdownItem";
-
-import BranchesNearYou from "./components/branches/BranchesNearYou";
+import FileInput from "../src/components/file_input/FileInput";
+import { SCButton } from "./lib/index.cjs";
 
 function App() {
-  const a=()=>{
-    console.log("a")
-  }
   return (
     <div className="App">
-     <BranchesNearYou/>
+      <FileInput
+        label="Profile Picture"
+        isVertical
+        variant="primary-outline"
+        hint="upload Image"
+        childButton={<SCButton label="click me" variant="success" size="xl" />}
+      />
     </div>
   );
 }

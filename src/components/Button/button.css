@@ -1,0 +1,344 @@
+.sc-btn {
+  @apply px-4;
+  @apply text-white;
+  @apply rounded;
+  @apply cursor-pointer;
+  @apply select-none;
+  @apply font-medium;
+  @apply rounded-lg;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.005em;
+}
+
+.sc-btn:focus {
+  @apply outline-none;
+}
+
+.sc-btn:disabled {
+  @apply cursor-not-allowed;
+}
+
+/* Button Size Styles */
+.sc-btn-sm {
+  @apply px-4;
+  height: 30px;
+  font-size: 12px;
+}
+
+.sc-btn-md {
+  height: 40px;
+  @apply px-5;
+}
+
+.sc-btn-lg {
+  height: 48px;
+  font-size: 16px;
+  @apply px-6;
+}
+
+/* Round button styles */
+.sc-btn-rounded {
+  @apply rounded-full;
+  @apply p-0;
+}
+
+.sc-btn-rounded.sc-btn-sm {
+  width: 30px;
+}
+
+.sc-btn-rounded.sc-btn-md {
+  width: 40px;
+  font-size: 20px;
+}
+
+.sc-btn-rounded.sc-btn-lg {
+  width: 48px;
+  font-size: 24px;
+}
+
+/* Primary Button Styles */
+.sc-btn-primary {
+  @apply bg-primary;
+}
+
+.sc-btn-primary:hover:not(:disabled) {
+  @apply bg-primary-dark;
+}
+
+.sc-btn-primary-clear {
+  @apply bg-transparent;
+  @apply text-primary;
+}
+
+.sc-btn-primary-clear:hover:not(:disabled) {
+  @apply border;
+  @apply border-primary;
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.sc-btn-primary:active {
+  @apply bg-primary;
+  @apply border-3;
+  @apply border-primary-lightest;
+}
+
+/* Secondary Button Styles */
+.sc-btn-secondary {
+  @apply bg-primary-lightest;
+  @apply text-primary;
+}
+
+.sc-btn-secondary:hover:not(:disabled) {
+  @apply bg-primary;
+  @apply text-white;
+}
+
+.sc-btn-secondary:active {
+  @apply bg-primary-lightest;
+  @apply text-primary;
+}
+
+.sc-btn-secondary-clear {
+  @apply bg-transparent;
+  @apply text-primary;
+}
+
+.sc-btn-secondary-clear:hover:not(:disabled) {
+  @apply bg-primary-lightest;
+  @apply text-primary;
+}
+
+.sc-btn-secondary:active {
+  @apply bg-primary-lightest;
+  @apply text-primary;
+}
+
+/* Primary and Secondary Outline Button Style */
+.sc-btn-primary-outline,
+.sc-btn-secondary-outline {
+  @apply bg-white;
+  @apply text-primary;
+  @apply border;
+  @apply border-primary;
+}
+
+.sc-btn-primary-outline:hover:not(:disabled),
+.sc-btn-secondary-outline:hover:not(:disabled) {
+  @apply bg-primary-lightest;
+}
+
+.sc-btn-primary-outline:active,
+.sc-btn-secondary-outline:active {
+  @apply bg-white;
+  @apply text-primary;
+  @apply border;
+  @apply border-primary;
+
+}
+
+/* Tertiary Button Styles  */
+.sc-btn-tertiary {
+  @apply bg-grey-lighter;
+  @apply text-black;
+}
+
+.sc-btn-tertiary-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-grey-dark;
+  @apply text-black;
+}
+
+.sc-btn-tertiary:hover:not(:disabled) {
+  @apply bg-grey-light;
+}
+
+.sc-btn-tertiary-outline:hover:not(:disabled) {
+  @apply bg-grey-lighter;
+}
+
+.sc-btn-tertiary-clear {
+  @apply bg-transparent;
+  @apply text-black;
+}
+
+.sc-btn-tertiary-clear:hover:not(:disabled) {
+  @apply bg-grey-lighter;
+  @apply text-black;
+}
+
+.sc-btn-tertiary:active {
+  @apply bg-grey-lighter;
+  @apply text-black;
+}
+
+.sc-btn-tertiary-outline:active {
+  @apply bg-white;
+  @apply border;
+  @apply border-grey-dark;
+  @apply text-black;
+}
+
+/* Success Button Styles */
+.sc-btn-success {
+  @apply bg-green;
+}
+
+.sc-btn-success-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-green;
+  @apply text-green;
+}
+
+.sc-btn-success:hover:not(:disabled) {
+  @apply bg-green-dark;
+}
+
+.sc-btn-success-outline:hover:not(:disabled) {
+  @apply bg-green-lightest;
+}
+
+.sc-btn-success-clear {
+  @apply bg-transparent;
+  @apply text-green;
+}
+
+.sc-btn-success-clear:hover:not(:disabled) {
+  @apply border;
+  @apply border-green;
+  @apply bg-green;
+  @apply text-white;
+}
+
+.sc-btn-success:active {
+  @apply bg-green;
+  @apply border-3;
+  @apply border-green-lightest;
+}
+
+.sc-btn-success-outline:active {
+  @apply border-2;
+  @apply border-green;
+}
+
+/* Warning Button Styles */
+.sc-btn-warning {
+  @apply bg-yellow;
+}
+
+.sc-btn-warning-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-yellow;
+  @apply text-yellow;
+}
+
+.sc-btn-warning:hover:not(:disabled) {
+  @apply bg-yellow-dark;
+}
+
+.sc-btn-warning-outline:hover:not(:disabled) {
+  @apply bg-yellow-lightest;
+}
+
+.sc-btn-warning-clear {
+  @apply bg-transparent;
+  @apply text-yellow;
+}
+
+.sc-btn-warning-clear:hover:not(:disabled) {
+  @apply border;
+  @apply border-yellow;
+  @apply bg-yellow;
+  @apply text-white;
+}
+
+.sc-btn-warning:active {
+  @apply bg-yellow;
+  @apply border-3;
+  @apply border-yellow-lightest;
+}
+
+.sc-btn-warning-outline:active {
+  @apply border-2;
+  @apply border-yellow;
+}
+
+/* Danger Button Styles */
+.sc-btn-danger {
+  @apply bg-red;
+}
+
+.sc-btn-danger-outline {
+  @apply bg-white;
+  @apply border;
+  @apply border-red;
+  @apply text-red;
+}
+
+.sc-btn-danger:hover:not(:disabled) {
+  @apply bg-red-dark;
+}
+
+.sc-btn-danger-outline:hover:not(:disabled) {
+  @apply bg-red-lightest;
+}
+
+.sc-btn-danger-clear {
+  @apply bg-transparent;
+  @apply text-red;
+}
+
+.sc-btn-danger-clear:hover:not(:disabled) {
+  @apply border;
+  @apply border-red;
+  @apply bg-red;
+  @apply text-white;
+}
+
+.sc-btn-danger:active {
+  @apply bg-red;
+  @apply border-3;
+  @apply border-red-lightest;
+}
+
+.sc-btn-danger-outline:active {
+  @apply border-2;
+  @apply border-red;
+}
+
+.sc-btn-primary:disabled,
+.sc-btn-secondary:disabled,
+.sc-btn-tertiary:disabled,
+.sc-btn-success:disabled,
+.sc-btn-warning:disabled,
+.sc-btn-danger:disabled {
+  @apply bg-grey-darkest;
+  @apply text-white;
+}
+
+.sc-btn-primary-outline:disabled,
+.sc-btn-secondary-outline:disabled,
+.sc-btn-tertiary-outline:disabled,
+.sc-btn-success-outline:disabled,
+.sc-btn-warning-outline:disabled,
+.sc-btn-danger-outline:disabled {
+  @apply border;
+  @apply border-grey-light;
+  @apply text-grey-light;
+}
+
+.sc-btn-primary-clear:disabled,
+.sc-btn-secondary-clear:disabled,
+.sc-btn-tertiary-clear:disabled,
+.sc-btn-success-clear:disabled,
+.sc-btn-warning-clear:disabled,
+.sc-btn-danger-clear:disabled {
+  @apply text-grey-light;
+}

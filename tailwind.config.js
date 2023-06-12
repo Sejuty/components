@@ -1,120 +1,72 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require("tailwindcss/plugin");
-
-const spacing = {};
-const heightWidth = {};
-const fontSize = {};
-const borderRadius = {};
-
-//------------------------------
-// @Spacing (margin,padding,gap)
-//-------------------------------
-for (let i = 0; i <= 128; i++) {
-  spacing[i * 2] = `${i * 2}px`;
-}
-
-//------------------------------
-// @FontSize
-//-------------------------------
-for (let i = 10; i <= 30; i++) {
-  fontSize[i] = [`${i}px`, `${i + 3}px`];
-}
-//------------------------------
-// @Width
-// Default have 0 to 256px
-//-------------------------------
-for (let i = 130; i <= 500; i++) {
-  heightWidth[i * 2] = `${i * 2}px`;
-}
-
-for (let i = 0; i <= 40; i++) {
-  borderRadius[i] = `${i}px`;
-}
-borderRadius[100] = "100px";
-
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    container: {
-      center: true,
-    },
-    screens: {},
     colors: {
-      white: {
-        DEFAULT: "#ffffff",
-      },
-      black: {
-        300: "#262626",
-        400: "#1C1B1F",
-        500: "#030205",
-        600: "#010101",
-        DEFAULT: "#000000",
-      },
+      transparent: "transparent",
+      current: "currentColor",
+
+      white: "#FFFFFF",
+      black: "#1C1C1C",
+
       primary: {
-        lightest: "#FFFBFE",
-        lighter: "#F0E7FE",
-        light: "#8541F6",
+        dark: "#4A0DAB",
         DEFAULT: "#6A13F4",
-        dark: "#6A14F4",
-        darker: "#510EBA",
+        light: "#833BF6",
+        lighter: "#C29EFA",
+        lightest: "#F0E7FE",
       },
-      magenta: {
-        light: "#CFB4FC",
-        DEFAULT: "#E83CF7",
+
+      grey: {
+        darkest: "#949494",
+        darker: "#B0B0B0",
+        dark: "#BFBFBF",
+        DEFAULT: "#DEDEDE",
+        light: "#D4D4D4",
+        lighter: "#EBEBEB",
+        lightest: "#FAFAFA",
       },
-      gray: {
-        light: "#F4F5F7",
-        DEFAULT: "#9B9B9B",
-        dark: "#CFD8DC",
-        darker: "#BCBDBE",
-      },
+
       green: {
-        light: "#78FAB1",
-        lighter: "#D3FDE8",
+        dark: "#0B4A23",
+        DEFAULT: "#16B050",
+        light: "#398355",
+        lighter: "#9DC2AB",
+        lightest: "#E7F0EB",
       },
+
+      yellow: {
+        dark: "#AA8911",
+        DEFAULT: "#F3C318",
+        light: "#F5CD3F",
+        lighter: "#FAE6A0",
+        lightest: "#FEF9E8",
+      },
+
       red: {
-        DEFAULT: "#F42A41",
+        dark: "#AB2C42",
+        DEFAULT: "#F43F5E",
+        light: "#F66079",
+        lighter: "#FAB0BD",
+        lightest: "#FEECEF",
       },
-    },
-    fontSize: {
-      xs: ["10px", { lineHeight: "140%", letterSpacing: "0.25px" }],
-      sm: ["12px", { lineHeight: "140%", letterSpacing: "0.75px" }],
-      md: ["14px", { lineHeight: "140%", letterSpacing: "0.25px" }],
-      lg: ["16px", { lineHeight: "140%", letterSpacing: "0.25px" }],
-      xl: ["18px", { lineHeight: "140%", letterSpacing: "-0.1px" }],
-    },
-    borderRadius: {
-      ...borderRadius,
-      full: "9999px",
     },
     borderWidth: {
-      default: "0.5px",
+      DEFAULT: "1px",
       0: "0",
+      2: "2px",
+      3: "3px",
+    },
+    outlineWidth: {
+      0: "0px",
+      1: "2px",
+      2: "2px",
+    },
+    outlineOffset: {
+      0: "0px",
       1: "1px",
       2: "2px",
     },
-
-    spacing: {
-      ...spacing,
-    },
-    extend: {
-      width: {
-        ...heightWidth,
-      },
-      height: {
-        ...heightWidth,
-      },
-    },
   },
-
-  plugins: [
-    plugin(function ({ addBase }) {
-      addBase({
-        "@font-face": {
-          fontFamily: "Inter",
-          src: "./src/fonts/Inter.ttf",
-        },
-      });
-    }),
-  ],
+  plugins: [],
 };

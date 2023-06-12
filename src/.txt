@@ -3780,3 +3780,73 @@ Default.args = {
   trigger: 'click',
   variant: 'danger',
 };
+
+
+    <div className="flex flex-col w-fit border">
+        <button
+          onClick={handleButtonClick}
+          className="bg-primary text-white rounded py-1 px-4 w-fit"
+        >
+          Upload an Image
+        </button>
+
+        <div className="relative">
+          <input
+            type="file"
+            id="file-input"
+            filetype={filetype}
+            multiple={multiple}
+            disabled={isDisabled}
+            ref={fileInputRef}
+            className="input-none w-1/2 border"
+          />
+          <label
+            className="absolute inset-0  text-black cursor-pointer w-fit"
+            htmlFor="file-input"
+          >
+            <span className="block">Pick an image file</span>
+          </label>
+        </div>
+      </div>
+
+
+
+      .upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  cursor: pointer;
+}
+
+
+
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
+}
+
+   <div className={`content-hint-position-${positionContentHint}`}>
+        <button
+          onClick={handleButtonClick}
+          className="bg-primary text-white rounded py-1 px-4 w-fit"
+        >
+          Upload an Image
+        </button>
+        <input
+          type="file"
+          id="file-input"
+          filetype={filetype}
+          multiple={multiple}
+          disabled={isDisabled}
+          ref={fileInputRef}
+          className="input-none"
+        />
+        <div onClick={handleButtonClick} className="cursor-pointer items-center">
+         {contentHint}
+        </div>
+      </div>

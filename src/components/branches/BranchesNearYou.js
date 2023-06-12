@@ -27,6 +27,7 @@ function BranchesNearYou() {
           <div className="text-lg font-medium">Delivery address</div>
         </div>
       </div>
+      <RiderInfo/>
       <div className="mx-16">
         <div className="flex flex-col my-16">
           <div className="text-lg font-medium mb-8">Select Your Branch</div>
